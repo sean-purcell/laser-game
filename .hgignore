@@ -10,3 +10,4 @@ syntax: regexp
 ^Build/.*
 ^Library/.*
 ^Temp/.*
+^.vscode/.*
