@@ -5,6 +5,7 @@ syntax: glob
 *.csproj
 *.pidb
 *.unitypackage
+*.sw*
 
 syntax: regexp
 ^Build/.*

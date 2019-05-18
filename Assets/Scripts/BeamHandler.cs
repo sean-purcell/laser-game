@@ -4,12 +4,18 @@ using UnityEngine;
 
 public class BeamHandler : MonoBehaviour
 {
-    const float SPEED = 0.5f;
+    const float SPEED = 1;
     public  GameHandler game;
 
     public LineRenderer r;
     public Vector2 start;
     public Vector2 dir;
+
+    public void InitBeam(GameHandler h, Vector2 start, Vector2 dir) {
+        this.game = h;
+        this.start = start;
+        this.dir = dir;
+    }
 
     // Start is called before the first frame update
     void Start()
