@@ -4,17 +4,21 @@ using UnityEngine;
 
 public class BeamHandler : MonoBehaviour
 {
-    const float SPEED = 1;
+    const float SPEED = 5;
     public  GameHandler game;
 
     public LineRenderer r;
-    public Vector2 start;
-    public Vector2 dir;
+    public Vector3 start;
+    public Vector3 end; // current head of wave, propagates
+    public Vector3 dir;
+    public bool propagating;
 
-    public void InitBeam(GameHandler h, Vector2 start, Vector2 dir) {
+    public void InitBeam(GameHandler h, Vector3 start, Vector3 dir) {
         this.game = h;
         this.start = start;
-        this.dir = dir;
+        this.end = start;
+        this.dir = Vector3.Normalize(dir);
+        this.propagating = true;
     }
 
     // Start is called before the first frame update
@@ -26,8 +30,19 @@ public class BeamHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float len = SPEED * game.SimTime();
-        r.SetPosition(1, len * dir + start);
-        Debug.Log("Len: " + len.ToString());
+        if (propagating)
+        {
+            RaycastHit hit;
+            if (Physics.Raycast(end, dir, out hit) && (hit.distance < SPEED * Time.deltaTime))
+            {
+                Debug.Log("collision");
+                end = hit.point;
+                hit.transform.gameObject.gameObject.GetComponent<TileHandler>().OnBeamCollision(this, hit);
+            } else {
+                Debug.Log("no collision yet");
+                end += SPEED * Time.deltaTime * dir;
+            }
+            r.SetPosition(1, end);
+        }
     }
 }

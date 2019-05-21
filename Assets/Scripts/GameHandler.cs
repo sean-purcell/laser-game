@@ -28,11 +28,10 @@ public class GameHandler : MonoBehaviour
     public float SimTime() {
         return simTime_;
     }
-
-
+    
     void BuildLevel() {
         BeamHandler b = (BeamHandler) Instantiate<BeamHandler>(beamPrefab);
-        b.InitBeam(this, new Vector2(0,0), new Vector2(1, 0));
+        b.InitBeam(this, new Vector2(2, 1.5f), new Vector2(-1, -1));
 
     }
 }
