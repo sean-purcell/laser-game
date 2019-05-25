@@ -39,7 +39,6 @@ public class BeamHandler : MonoBehaviour
                 end = hit.point;
                 hit.transform.gameObject.gameObject.GetComponent<TileHandler>().OnBeamCollision(this, hit);
             } else {
-                Debug.Log("no collision yet");
                 end += SPEED * Time.deltaTime * dir;
             }
             r.SetPosition(1, end);
