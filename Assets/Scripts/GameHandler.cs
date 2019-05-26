@@ -67,6 +67,10 @@ public class GameHandler : MonoBehaviour
             case MapParser.TileType.LaserUp:
             case MapParser.TileType.LaserDown:
                 return factory.CreateLaser();
+            case MapParser.TileType.Wall:
+                return factory.CreateWall();
+            case MapParser.TileType.Target:
+                return factory.CreateTarget();
             default:
                 throw new Exception("Attempted to create unsupported tile type " + Enum.GetName(typeof(MapParser.TileType), tile));
         }

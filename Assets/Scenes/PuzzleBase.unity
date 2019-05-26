@@ -319,6 +319,10 @@ MonoBehaviour:
     type: 3}
   laserPrefab: {fileID: 8620389247708159268, guid: 2657a0d57b23f7244a153c8ef94cae08,
     type: 3}
+  wallPrefab: {fileID: 2680284417437033230, guid: ac7f285a644272b40b9ae402b634492a,
+    type: 3}
+  targetPrefab: {fileID: 5252511500486120334, guid: ff9a1819cde3d9d4e8b2510e39d1f113,
+    type: 3}
 --- !u!4 &1445701235
 Transform:
   m_ObjectHideFlags: 0

@@ -6,6 +6,8 @@ public class TileFactory : MonoBehaviour
 {
     public FlatMirrorHandler flatMirrorPrefab;
     public LaserHandler laserPrefab;
+    public WallHandler wallPrefab;
+    public TargetHandler targetPrefab;
 
     public FlatMirrorHandler CreateFlatMirror()
     {
@@ -15,6 +17,16 @@ public class TileFactory : MonoBehaviour
     public LaserHandler CreateLaser()
     {
         return (LaserHandler) Instantiate<LaserHandler>(laserPrefab);
+    }
+
+    public WallHandler CreateWall()
+    {
+        return (WallHandler) Instantiate<WallHandler>(wallPrefab);
+    }
+
+    public TargetHandler CreateTarget()
+    {
+        return (TargetHandler) Instantiate<TargetHandler>(targetPrefab);
     }
 
     void Start()
