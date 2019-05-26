@@ -4,6 +4,8 @@ using UnityEngine;
 
 abstract public class TileHandler : MonoBehaviour
 {
+    protected GameHandler game;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -14,6 +16,13 @@ abstract public class TileHandler : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void Init(GameHandler game, (int row, int col) tile, float orientation)
+    {
+        this.game = game;
+        transform.localPosition = new Vector2(tile.col + 0.5f, tile.row + 0.5f);
+        transform.Rotate(0, 0, orientation);
     }
 
     // Called once per beam, usually.

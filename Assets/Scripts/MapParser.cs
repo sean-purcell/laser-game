@@ -100,10 +100,12 @@ public class MapParser
                     var tile = GetTileType(line[col]);
                     if (tile == TileType.Empty) continue;
 
-                    map.tiles.Add((row, col), tile);
+                    // The first row is the highest one
+                    map.tiles.Add((map.rows - 1 - row, col), tile);
                 }
             }
             return map;
         }
     }
 }
+

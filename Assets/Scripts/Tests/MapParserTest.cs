@@ -20,10 +20,10 @@ namespace Tests
 
             Assert.AreEqual(map.tiles.Count, 4);
 
-            Assert.AreEqual(map.tiles[(0, 0)], MapParser.TileType.LaserRight);
-            Assert.AreEqual(map.tiles[(0, 3)], MapParser.TileType.MirrorBackward);
-            Assert.AreEqual(map.tiles[(2, 0)], MapParser.TileType.Wall);
-            Assert.AreEqual(map.tiles[(2, 3)], MapParser.TileType.Target);
+            Assert.AreEqual(map.tiles[(2, 0)], MapParser.TileType.LaserRight);
+            Assert.AreEqual(map.tiles[(2, 3)], MapParser.TileType.MirrorBackward);
+            Assert.AreEqual(map.tiles[(0, 0)], MapParser.TileType.Wall);
+            Assert.AreEqual(map.tiles[(0, 3)], MapParser.TileType.Target);
         }
     }
 }
