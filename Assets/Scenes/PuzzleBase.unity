@@ -189,7 +189,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 340832956}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 37.83, y: 1.43, z: -1.0546875}
+  m_LocalPosition: {x: -1, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -316,6 +316,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   flatMirrorPrefab: {fileID: 5658999425641471527, guid: 1eb1da5484a00884382ba31b64508c54,
+    type: 3}
+  laserPrefab: {fileID: 8620389247708159268, guid: 2657a0d57b23f7244a153c8ef94cae08,
     type: 3}
 --- !u!4 &1445701235
 Transform:

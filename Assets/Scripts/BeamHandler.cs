@@ -5,7 +5,7 @@ using UnityEngine;
 public class BeamHandler : MonoBehaviour
 {
     const float SPEED = 5;
-    public  GameHandler game;
+    public GameHandler game;
 
     public LineRenderer r;
     public Vector3 start;

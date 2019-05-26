@@ -62,6 +62,11 @@ public class GameHandler : MonoBehaviour
             case MapParser.TileType.MirrorForward:
             case MapParser.TileType.MirrorBackward:
                 return factory.CreateFlatMirror();
+            case MapParser.TileType.LaserLeft:
+            case MapParser.TileType.LaserRight:
+            case MapParser.TileType.LaserUp:
+            case MapParser.TileType.LaserDown:
+                return factory.CreateLaser();
             default:
                 throw new Exception("Attempted to create unsupported tile type " + Enum.GetName(typeof(MapParser.TileType), tile));
         }
@@ -75,6 +80,14 @@ public class GameHandler : MonoBehaviour
                 return -45;
             case MapParser.TileType.MirrorBackward:
                 return 45;
+            case MapParser.TileType.LaserLeft:
+                return 90;
+            case MapParser.TileType.LaserRight:
+                return -90;
+            case MapParser.TileType.LaserUp:
+                return 0;
+            case MapParser.TileType.LaserDown:
+                return 180;
             default:
                 return 0;
         }
