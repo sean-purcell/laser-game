@@ -9,20 +9,18 @@ public class BeamHandler : MonoBehaviour
 
     public LineRenderer r;
     public Vector3 start;
-    public Vector3 end; // current head of wave, propagates
     public Vector3 dir;
     public bool propagating;
 
-    private float startTime_;
+    public float startTime;
 
     public void InitBeam(GameHandler h, Vector3 start, Vector3 dir) {
         this.game = h;
         this.start = start;
-        this.end = start;
         this.dir = Vector3.Normalize(dir);
         this.propagating = true;
 
-        this.startTime_ = h.SimTime();
+        this.startTime = h.SimTime();
     }
 
     // Start is called before the first frame update
@@ -34,14 +32,23 @@ public class BeamHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        float length = SPEED * (game.SimTime() - startTime);
+        if (length < -1e-9)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        r.enabled = length > 1e-9;
         if (propagating)
         {
             RaycastHit hit;
-            if (Physics.Raycast(end, dir, out hit) && (hit.distance < SPEED * Time.deltaTime))
+            if (Physics.Raycast(start, dir, out hit) && (hit.distance <= length))
             {
                 Debug.Log("collision");
+                // TODO: add a parameter for the time at which the new beam should be generated
                 hit.transform.gameObject.gameObject.GetComponent<TileHandler>().OnBeamCollision(this, hit);
             }
+            Vector3 end = start + dir * length;
             if (!propagating) {
                 end = hit.point;
             } else {

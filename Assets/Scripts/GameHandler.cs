@@ -17,7 +17,9 @@ public class GameHandler : MonoBehaviour
     public TileFactory factory;
     public Transform camera;
 
-    float simTime_;
+    public bool playing;
+
+    public float simTime;
 
     // Start is called before the first frame update
     void Start()
@@ -25,17 +27,35 @@ public class GameHandler : MonoBehaviour
         Debug.Log("GameHandler.Start");
         InitTiles();
         //LoadMap();
-        simTime_ = 0;
+        playing = false;
+        simTime = 0;
+    }
+
+    public void Play()
+    {
+        playing = true;
+    }
+
+    public void Pause()
+    {
+        playing = false;
+    }
+
+    public void Reset()
+    {
+        Pause();
+        simTime = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
-        simTime_ += Time.deltaTime;
+        if (playing)
+            simTime += Time.deltaTime;
     }
 
     public float SimTime() {
-        return simTime_;
+        return simTime;
     }
 
     private void InitTiles()
