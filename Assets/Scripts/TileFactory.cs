@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class TileFactory : MonoBehaviour
 {
-    public FlatMirrorHandler flatMirrorPrefab;
+    public MirrorHandler flatMirrorPrefab;
     public LaserHandler laserPrefab;
     public WallHandler wallPrefab;
     public TargetHandler targetPrefab;
 
-    public FlatMirrorHandler CreateFlatMirror()
+    public MirrorHandler CreateFlatMirror()
     {
-        return (FlatMirrorHandler) Instantiate<FlatMirrorHandler>(flatMirrorPrefab);
+        return (MirrorHandler) Instantiate<MirrorHandler>(flatMirrorPrefab);
     }
 
     public LaserHandler CreateLaser()

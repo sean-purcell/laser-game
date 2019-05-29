@@ -23,7 +23,7 @@ public class GameHandler : MonoBehaviour
     void Start()
     {
         Debug.Log("GameHandler.Start");
-        LoadMap();
+        //LoadMap();
         simTime_ = 0;
     }
 

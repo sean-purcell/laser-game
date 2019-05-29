@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FlatMirrorHandler : TileHandler
+public class MirrorHandler : TileHandler
 {
     // Start is called before the first frame update
     void Start()

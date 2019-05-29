@@ -21,8 +21,6 @@ public class TargetHandler : TileHandler
 
     public override void OnBeamCollision(BeamHandler beam, RaycastHit hit)
     {
-        beam.propagating = false;
-
         renderer.material.color = Color.cyan;
         //game.Win();
     }
