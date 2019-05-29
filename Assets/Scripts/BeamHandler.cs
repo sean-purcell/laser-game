@@ -13,12 +13,16 @@ public class BeamHandler : MonoBehaviour
     public Vector3 dir;
     public bool propagating;
 
+    private float startTime_;
+
     public void InitBeam(GameHandler h, Vector3 start, Vector3 dir) {
         this.game = h;
         this.start = start;
         this.end = start;
         this.dir = Vector3.Normalize(dir);
         this.propagating = true;
+
+        this.startTime_ = h.SimTime();
     }
 
     // Start is called before the first frame update
@@ -36,7 +40,6 @@ public class BeamHandler : MonoBehaviour
             if (Physics.Raycast(end, dir, out hit) && (hit.distance < SPEED * Time.deltaTime))
             {
                 Debug.Log("collision");
-                end = hit.point;
                 hit.transform.gameObject.gameObject.GetComponent<TileHandler>().OnBeamCollision(this, hit);
             }
             if (!propagating) {

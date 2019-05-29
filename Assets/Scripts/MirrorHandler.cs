@@ -22,6 +22,6 @@ public class MirrorHandler : TileHandler
         beam.propagating = false;
         Vector3 reflectedDir = Vector3.Reflect(beam.dir, hit.normal);
         BeamHandler b = (BeamHandler)Instantiate<BeamHandler>(beam);
-        b.InitBeam(beam.game, beam.end, reflectedDir);
+        b.InitBeam(beam.game, hit.point, reflectedDir);
     }
 }

@@ -23,6 +23,7 @@ public class GameHandler : MonoBehaviour
     void Start()
     {
         Debug.Log("GameHandler.Start");
+        InitTiles();
         //LoadMap();
         simTime_ = 0;
     }
@@ -35,6 +36,16 @@ public class GameHandler : MonoBehaviour
 
     public float SimTime() {
         return simTime_;
+    }
+
+    private void InitTiles()
+    {
+        var tiles = GameObject
+            .Find("/Tiles")
+            .GetComponentsInChildren<TileHandler>();
+        foreach (var tile in tiles) {
+            tile.Init(this);
+        }
     }
 
     private void LoadMap()

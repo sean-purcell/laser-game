@@ -18,9 +18,14 @@ abstract public class TileHandler : MonoBehaviour
         
     }
 
-    public void Init(GameHandler game, (int row, int col) tile, float orientation)
+    public void Init(GameHandler game)
     {
         this.game = game;
+    }
+
+    public void Init(GameHandler game, (int row, int col) tile, float orientation)
+    {
+        Init(game);
         transform.localPosition = new Vector2(tile.col + 0.5f, tile.row + 0.5f);
         transform.Rotate(0, 0, orientation);
     }
