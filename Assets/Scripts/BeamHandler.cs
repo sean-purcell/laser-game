@@ -38,6 +38,9 @@ public class BeamHandler : MonoBehaviour
                 Debug.Log("collision");
                 end = hit.point;
                 hit.transform.gameObject.gameObject.GetComponent<TileHandler>().OnBeamCollision(this, hit);
+            }
+            if (!propagating) {
+                end = hit.point;
             } else {
                 end += SPEED * Time.deltaTime * dir;
             }
