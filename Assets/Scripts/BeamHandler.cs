@@ -5,6 +5,7 @@ using UnityEngine;
 public class BeamHandler : MonoBehaviour
 {
     const float SPEED = 5;
+
     public GameHandler game;
 
     public LineRenderer renderer;
@@ -13,6 +14,8 @@ public class BeamHandler : MonoBehaviour
     public bool propagating;
 
     public float startTime;
+
+    int layerMask;
 
     public void InitBeam(GameHandler h, Vector3 start, Vector3 dir) {
         this.game = h;
@@ -24,6 +27,8 @@ public class BeamHandler : MonoBehaviour
         this.propagating = true;
 
         this.startTime = h.SimTime();
+
+        layerMask = 1 << LayerMask.NameToLayer("Tile");
     }
 
     // Start is called before the first frame update
@@ -51,10 +56,11 @@ public class BeamHandler : MonoBehaviour
             return;
         }
         renderer.enabled = length > 1e-9;
+        collider.enabled = renderer.enabled;
         if (propagating)
         {
             RaycastHit hit;
-            if (Physics.Raycast(transform.position, GetDir(), out hit) &&
+            if (Physics.Raycast(transform.position, GetDir(), out hit, Mathf.Infinity, layerMask) &&
                     (hit.distance <= length))
             {
                 Debug.Log("collision");
@@ -65,6 +71,8 @@ public class BeamHandler : MonoBehaviour
             if (!propagating) {
                 end.x = hit.distance;
             }
+            collider.center = new Vector3(end.x / 2, 0, 0);
+            collider.height = end.x;
             renderer.SetPosition(1, end);
         }
     }
