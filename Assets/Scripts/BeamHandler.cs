@@ -7,17 +7,20 @@ public class BeamHandler : MonoBehaviour
     const float SPEED = 5;
     public GameHandler game;
 
-    public LineRenderer r;
-    public Vector3 start;
-    public Vector3 dir;
+    public LineRenderer renderer;
+    public CapsuleCollider collider;
+
     public bool propagating;
 
     public float startTime;
 
     public void InitBeam(GameHandler h, Vector3 start, Vector3 dir) {
         this.game = h;
-        this.start = start;
-        this.dir = Vector3.Normalize(dir);
+
+        float ang = Mathf.Atan2(dir.y, dir.x);
+        transform.localEulerAngles = new Vector3(0, 0, ang * Mathf.Rad2Deg);
+        transform.position = start;
+
         this.propagating = true;
 
         this.startTime = h.SimTime();
@@ -26,35 +29,48 @@ public class BeamHandler : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        r.SetPosition(0, start);
+        renderer.SetPosition(0, Vector3.zero);
+        renderer.SetPosition(1, Vector3.zero);
     }
 
     // Update is called once per frame
     void Update()
     {
+        const float EPS = 1e-4f;
+
+        var time = game.SimTime();
+        if (time < startTime - EPS) {
+            Destroy(gameObject);
+            return;
+        }
+
         float length = SPEED * (game.SimTime() - startTime);
         if (length < -1e-9)
         {
             Destroy(gameObject);
             return;
         }
-        r.enabled = length > 1e-9;
+        renderer.enabled = length > 1e-9;
         if (propagating)
         {
             RaycastHit hit;
-            if (Physics.Raycast(start, dir, out hit) && (hit.distance <= length))
+            if (Physics.Raycast(transform.position, GetDir(), out hit) &&
+                    (hit.distance <= length))
             {
                 Debug.Log("collision");
                 // TODO: add a parameter for the time at which the new beam should be generated
                 hit.transform.gameObject.gameObject.GetComponent<TileHandler>().OnBeamCollision(this, hit);
             }
-            Vector3 end = start + dir * length;
+            Vector3 end = new Vector3(length, 0, 0);
             if (!propagating) {
-                end = hit.point;
-            } else {
-                end += SPEED * Time.deltaTime * dir;
+                end.x = hit.distance;
             }
-            r.SetPosition(1, end);
+            renderer.SetPosition(1, end);
         }
+    }
+
+    public Vector3 GetDir()
+    {
+        return transform.TransformDirection(1, 0, 0);
     }
 }

@@ -166,6 +166,7 @@ MonoBehaviour:
   factory: {fileID: 0}
   camera: {fileID: 1650651004}
   playing: 0
+  simTime: 0
 --- !u!1 &128847327
 GameObject:
   m_ObjectHideFlags: 0
@@ -432,6 +433,11 @@ PrefabInstance:
     - target: {fileID: 7430495567212666143, guid: ff9a1819cde3d9d4e8b2510e39d1f113,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7430495567212666140, guid: ff9a1819cde3d9d4e8b2510e39d1f113,
+        type: 3}
+      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
