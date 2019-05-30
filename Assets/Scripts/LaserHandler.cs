@@ -9,7 +9,8 @@ public class LaserHandler : TileHandler
     // Start is called before the first frame update
     void Start()
     {
-        var beam = (BeamHandler)Instantiate<BeamHandler>(beamPrefab);
+        var beams = GameObject.Find("/Beams");
+        var beam = (BeamHandler)Instantiate<BeamHandler>(beamPrefab, beams.transform);
         beam.InitBeam(game,
                 transform.TransformPoint(new Vector3(0, 0.5f, 0)),
                 transform.TransformDirection(new Vector3(0, 1, 0))

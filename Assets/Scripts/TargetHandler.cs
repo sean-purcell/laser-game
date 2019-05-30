@@ -17,8 +17,10 @@ public class TargetHandler : TileHandler
         renderer.material.color = Color.grey;
     }
 
-    // Update is called once per frame
     void Update()
+    {}
+
+    public override void Process()
     {
         // Check for any collisions with lasers
 

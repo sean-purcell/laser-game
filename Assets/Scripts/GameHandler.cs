@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class GameHandler : MonoBehaviour
 {
+    public const float MAX_UPDATE_TIME = 0.005f;
+
     // FIXME dont default this
     private static string levelName = "dev";
 
@@ -47,84 +49,52 @@ public class GameHandler : MonoBehaviour
         simTime = 0;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (playing)
-            simTime += Time.deltaTime;
-    }
-
     public float SimTime() {
         return simTime;
     }
 
+    // Update is called once per frame
+    void Update()
+    {
+        // Assume time only advances for now
+        if (playing) {
+            int updates = Mathf.CeilToInt(Time.deltaTime / MAX_UPDATE_TIME);
+            float otime = simTime;
+            for (int i = 1; i <= updates; i++) {
+                simTime = otime + i * Time.deltaTime / updates;
+                DoProcess();
+            }
+        }
+    }
+
+    private void DoProcess()
+    {
+        foreach (var beam in GetBeams()) {
+            beam.Process();
+        }
+        foreach (var tile in GetTiles()) {
+            tile.Process();
+        }
+    }
+
     private void InitTiles()
     {
-        var tiles = GameObject
-            .Find("/Tiles")
-            .GetComponentsInChildren<TileHandler>();
-        foreach (var tile in tiles) {
+        foreach (var tile in GetTiles()) {
             tile.Init(this);
         }
     }
 
-    private void LoadMap()
+    private TileHandler[] GetTiles()
     {
-        var map = MapParser.GetMap(@"Assets\Maps\" + levelName);
-
-        CentreCamera(map.rows, map.cols);
-
-        foreach (var entry in map.tiles) {
-            TileHandler tile = ConstructTile(entry.Value);
-            float orientation = GetOrientation(entry.Value);
-            tile.Init(this, entry.Key, orientation);
-        }
+        return GameObject
+            .Find("/Tiles")
+            .GetComponentsInChildren<TileHandler>();
     }
 
-    private void CentreCamera(int rows, int cols)
+    private BeamHandler[] GetBeams()
     {
-        camera.position = new Vector3(cols / 2.0f, rows / 2.0f, -10);
-    }
-
-    private TileHandler ConstructTile(MapParser.TileType tile)
-    {
-        switch (tile)
-        {
-            case MapParser.TileType.MirrorForward:
-            case MapParser.TileType.MirrorBackward:
-                return factory.CreateFlatMirror();
-            case MapParser.TileType.LaserLeft:
-            case MapParser.TileType.LaserRight:
-            case MapParser.TileType.LaserUp:
-            case MapParser.TileType.LaserDown:
-                return factory.CreateLaser();
-            case MapParser.TileType.Wall:
-                return factory.CreateWall();
-            case MapParser.TileType.Target:
-                return factory.CreateTarget();
-            default:
-                throw new Exception("Attempted to create unsupported tile type " + Enum.GetName(typeof(MapParser.TileType), tile));
-        }
-    }
-    
-    private float GetOrientation(MapParser.TileType tile)
-    {
-        switch (tile)
-        {
-            case MapParser.TileType.MirrorForward:
-                return -45;
-            case MapParser.TileType.MirrorBackward:
-                return 45;
-            case MapParser.TileType.LaserLeft:
-                return 90;
-            case MapParser.TileType.LaserRight:
-                return -90;
-            case MapParser.TileType.LaserUp:
-                return 0;
-            case MapParser.TileType.LaserDown:
-                return 180;
-            default:
-                return 0;
-        }
+        return GameObject
+            .Find("/Beams")
+            .GetComponentsInChildren<BeamHandler>();
     }
 }

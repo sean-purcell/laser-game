@@ -15,7 +15,11 @@ abstract public class TileHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+    }
+
+    // Called more than once per frame by GameHandler
+    public virtual void Process()
+    {
     }
 
     public void Init(GameHandler game)

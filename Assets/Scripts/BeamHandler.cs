@@ -41,6 +41,11 @@ public class BeamHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+    }
+
+    // Use custom update called by GameHandler
+    public void Process()
+    {
         const float EPS = 1e-4f;
 
         var time = game.SimTime();
