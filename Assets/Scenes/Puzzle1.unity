@@ -163,7 +163,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1a9815b130f0054498f2ae4a01d4a5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  factory: {fileID: 0}
+  beamPrefab: {fileID: 7788798381340195797, guid: 5d94f40bc391ea8488adec93f53e7a31,
+    type: 3}
+  beamParent: {fileID: 0}
+  tileParent: {fileID: 0}
   camera: {fileID: 1650651004}
   playing: 0
   simTime: 0

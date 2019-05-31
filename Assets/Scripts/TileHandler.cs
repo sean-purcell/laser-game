@@ -34,6 +34,9 @@ abstract public class TileHandler : MonoBehaviour
         transform.Rotate(0, 0, orientation);
     }
 
-    // Called once per beam, usually.
-    abstract public void OnBeamCollision(BeamHandler beam, RaycastHit hit);
+    public virtual List<BeamHandler> OnBeamCollision(BeamHandler beam, RaycastHit hit)
+    {
+        return null;
+    }
+
 }

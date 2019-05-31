@@ -16,7 +16,11 @@ public class GameHandler : MonoBehaviour
         SceneManager.LoadScene("PuzzleBase");
     }
 
-    public TileFactory factory;
+    public BeamHandler beamPrefab;
+    public GameObject beamParent;
+
+    public GameObject tileParent;
+
     public Transform camera;
 
     public bool playing;
@@ -28,7 +32,8 @@ public class GameHandler : MonoBehaviour
     {
         Debug.Log("GameHandler.Start");
         InitTiles();
-        //LoadMap();
+        InitBeamParent();
+
         playing = false;
         simTime = 0;
     }
@@ -36,6 +41,7 @@ public class GameHandler : MonoBehaviour
     public void Play()
     {
         playing = true;
+
     }
 
     public void Pause()
@@ -51,6 +57,13 @@ public class GameHandler : MonoBehaviour
 
     public float SimTime() {
         return simTime;
+    }
+
+    public BeamHandler CreateBeam(Vector3 start, Vector3 dir)
+    {
+        var beam = Instantiate<BeamHandler>(beamPrefab, beamParent.transform);
+        beam.InitBeam(this, start, dir);
+        return beam;
     }
 
     // Update is called once per frame
@@ -79,22 +92,28 @@ public class GameHandler : MonoBehaviour
 
     private void InitTiles()
     {
+        tileParent = GameObject.Find("/Tiles");
         foreach (var tile in GetTiles()) {
             tile.Init(this);
         }
     }
 
+    private void InitBeamParent()
+    {
+        beamParent = GameObject.Find("/Beams");
+        if (beamParent == null) {
+            beamParent = new GameObject();
+            beamParent.name = "Beams";
+        }
+    }
+
     private TileHandler[] GetTiles()
     {
-        return GameObject
-            .Find("/Tiles")
-            .GetComponentsInChildren<TileHandler>();
+        return tileParent.GetComponentsInChildren<TileHandler>();
     }
 
     private BeamHandler[] GetBeams()
     {
-        return GameObject
-            .Find("/Beams")
-            .GetComponentsInChildren<BeamHandler>();
+        return beamParent.GetComponentsInChildren<BeamHandler>();
     }
 }

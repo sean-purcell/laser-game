@@ -37,8 +37,4 @@ public class TargetHandler : TileHandler
             renderer.material.color = Color.grey;
         }
     }
-
-    public override void OnBeamCollision(BeamHandler beam, RaycastHit hit)
-    {
-    }
 }

@@ -16,13 +16,11 @@ public class MirrorHandler : TileHandler
         
     }
 
-    public override void OnBeamCollision(BeamHandler beam, RaycastHit hit)
+    public override List<BeamHandler> OnBeamCollision(BeamHandler beam, RaycastHit hit)
     {
-        // TODO: this is bunk and junk
-        beam.propagating = false;
         Vector3 reflectedDir = Vector3.Reflect(beam.GetDir(), hit.normal);
-        var beams = GameObject.Find("/Beams");
-        BeamHandler b = (BeamHandler)Instantiate<BeamHandler>(beam, beams.transform);
-        b.InitBeam(beam.game, hit.point, reflectedDir);
+        var beams = new List<BeamHandler>();
+        beams.Add(game.CreateBeam(hit.point, reflectedDir));
+        return beams;
     }
 }

@@ -14,10 +14,15 @@ public class BeamHandler : MonoBehaviour
     public bool propagating;
 
     public float startTime;
+    public float poweredUntil;
+
+    public TileHandler endPoint;
+    public List<BeamHandler> children;
 
     int layerMask;
 
-    public void InitBeam(GameHandler h, Vector3 start, Vector3 dir) {
+    public void InitBeam(GameHandler h, Vector3 start, Vector3 dir)
+    {
         this.game = h;
 
         float ang = Mathf.Atan2(dir.y, dir.x);
@@ -27,15 +32,19 @@ public class BeamHandler : MonoBehaviour
         this.propagating = true;
 
         this.startTime = h.SimTime();
+        this.poweredUntil = Mathf.Infinity;
+
+        this.endPoint = null;
+        this.children = null;
 
         layerMask = 1 << LayerMask.NameToLayer("Tile");
+
+        SetEndpoints(0, 0);
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        renderer.SetPosition(0, Vector3.zero);
-        renderer.SetPosition(1, Vector3.zero);
     }
 
     // Update is called once per frame
@@ -46,40 +55,59 @@ public class BeamHandler : MonoBehaviour
     // Use custom update called by GameHandler
     public void Process()
     {
-        const float EPS = 1e-4f;
-
-        var time = game.SimTime();
-        if (time < startTime - EPS) {
-            Destroy(gameObject);
+        float time = game.SimTime();
+        if (time < startTime) {
+            GameObject.Destroy(gameObject);
             return;
         }
 
-        float length = SPEED * (game.SimTime() - startTime);
-        if (length < -1e-9)
-        {
-            Destroy(gameObject);
+        float end = (time - startTime) * SPEED;
+        float start = 0;
+        if (time > poweredUntil) {
+            start = (time - poweredUntil) * SPEED;
+        }
+
+        RaycastHit hit;
+        if (Physics.Raycast(
+                    transform.position,
+                    GetDir(),
+                    out hit,
+                    end,
+                    layerMask)) {
+            HandleCollision(end, hit);
+            end = hit.distance;
+        }
+        SetEndpoints(start, end);
+    }
+
+    private void HandleCollision(float end, RaycastHit hit)
+    {
+        var tile = hit
+            .collider
+            .gameObject
+            .GetComponentInParent<TileHandler>();
+        if (tile == endPoint) {
+            // We've already handled this collision
             return;
         }
-        renderer.enabled = length > 1e-9;
-        collider.enabled = renderer.enabled;
-        if (propagating)
-        {
-            RaycastHit hit;
-            if (Physics.Raycast(transform.position, GetDir(), out hit, Mathf.Infinity, layerMask) &&
-                    (hit.distance <= length))
-            {
-                Debug.Log("collision");
-                // TODO: add a parameter for the time at which the new beam should be generated
-                hit.transform.gameObject.gameObject.GetComponent<TileHandler>().OnBeamCollision(this, hit);
-            }
-            Vector3 end = new Vector3(length, 0, 0);
-            if (!propagating) {
-                end.x = hit.distance;
-            }
-            collider.center = new Vector3(end.x / 2, 0, 0);
-            collider.height = end.x;
-            renderer.SetPosition(1, end);
+        endPoint = tile;
+        children = tile.OnBeamCollision(this, hit);
+        if (children == null) {
+            children = new List<BeamHandler>();
         }
+    }
+
+    private void SetEndpoints(float start, float end)
+    {
+        renderer.SetPosition(0, start * Vector3.right);
+        renderer.SetPosition(1, end * Vector3.right);
+
+        collider.center = (end + start) / 2 * Vector3.right;
+        collider.height = end - start;
+
+        bool enabled = (end - start) > 1e-4;
+        renderer.enabled = enabled;
+        collider.enabled = enabled;
     }
 
     public Vector3 GetDir()

@@ -13,9 +13,4 @@ public class WallHandler : TileHandler
     void Update()
     {
     }
-
-    public override void OnBeamCollision(BeamHandler beam, RaycastHit hit)
-    {
-        beam.propagating = false;
-    }
 }
