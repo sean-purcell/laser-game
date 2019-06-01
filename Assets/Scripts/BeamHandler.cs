@@ -1,10 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 public class BeamHandler : MonoBehaviour
 {
     const float SPEED = 5;
+
+    private const float EPS = 1e-4f;
 
     public GameHandler game;
 
@@ -17,6 +20,7 @@ public class BeamHandler : MonoBehaviour
     public float poweredUntil;
 
     public TileHandler endPoint;
+    public float hitDist;
     public List<BeamHandler> children;
 
     int layerMask;
@@ -35,6 +39,7 @@ public class BeamHandler : MonoBehaviour
         this.poweredUntil = Mathf.Infinity;
 
         this.endPoint = null;
+        this.hitDist = Mathf.Infinity;
         this.children = null;
 
         layerMask = 1 << LayerMask.NameToLayer("Tile");
@@ -68,33 +73,130 @@ public class BeamHandler : MonoBehaviour
         }
 
         RaycastHit hit;
-        if (Physics.Raycast(
+        bool res = Physics.Raycast(
                     transform.position,
                     GetDir(),
                     out hit,
                     end,
-                    layerMask)) {
-            HandleCollision(end, hit);
+                    layerMask);
+
+        HandleCollision(start, end, res, hit);
+        if (res) {
             end = hit.distance;
         }
+
+        start = Mathf.Min(start, end);
+
         SetEndpoints(start, end);
     }
 
-    private void HandleCollision(float end, RaycastHit hit)
+    private void HandleCollision(float start, float end, bool hasHit, RaycastHit hit)
     {
-        var tile = hit
-            .collider
-            .gameObject
-            .GetComponentInParent<TileHandler>();
+        // Are we now shorter than a pre-existing hit?
+        if (endPoint != null && end < hitDist) {
+            // Delete old hit
+            endPoint = null;
+            hitDist = Mathf.Infinity;
+            // The children will clean themselves up based on startTime
+            children = null;
+        }
+
+        TileHandler tile = null;
+        if (hasHit) {
+            tile = hit
+                .collider
+                .gameObject
+                .GetComponentInParent<TileHandler>();
+        }
+
+        if (!hasHit || tile != endPoint) {
+            // If we have a real hit that doesn't exist anymore (because the
+            // source moved), stop powering the children.
+
+            if (children != null) {
+                foreach (var beam in children) {
+                    beam.SetPoweredUntil(game.SimTime());
+                }
+                endPoint = null;
+                hitDist = Mathf.Infinity;
+                children = null;
+            }
+        }
+
+        // If we don't have a hit theres nothing to do
+        if (!hasHit) {
+            return;
+        }
+
         if (tile == endPoint) {
             // We've already handled this collision
             return;
         }
+
+        float newStart = FindOtherSide(hit);
+        if (newStart >= end - EPS) {
+            // New ray!
+            var dir = GetDir();
+            var beam = game.CreateBeam(hit.point + newStart * dir, dir);
+
+            beam.startTime = (end - newStart) / SPEED;
+            beam.poweredUntil = game.SimTime() +
+                Mathf.Max(0, start - newStart) / SPEED;
+
+            beam.endPoint = endPoint;
+            beam.children = children;
+        }
+
+        children = null;
         endPoint = tile;
-        children = tile.OnBeamCollision(this, hit);
+        hitDist = hit.distance;
+        // If we've already passed the collision point don't spawn children
+        if (start < hit.distance - EPS) {
+            children = tile.OnBeamCollision(this, hit);
+        }
         if (children == null) {
             children = new List<BeamHandler>();
         }
+
+        UpdateChildrenPowered();
+    }
+
+    private void UpdateChildrenPowered() {
+        if (children == null) return;
+        if (poweredUntil == Mathf.Infinity) return;
+
+        float newTime = hitDist / SPEED + poweredUntil;
+        foreach (var beam in children) {
+            beam.SetPoweredUntil(newTime);
+        }
+    }
+
+    public void SetPoweredUntil(float until) {
+        poweredUntil = until;
+        UpdateChildrenPowered();
+    }
+
+    private float FindOtherSide(RaycastHit hit)
+    {
+        // NB: This does not work with concave targets, if we create any of
+        // those we need to fix this.  I spent some time trying to come up with
+        // a solution for those and got nowhere other than advancing a point
+        // until its outside the mesh, but that is slow and not worth doing for
+        // now.
+
+        var dir = GetDir();
+        var start = hit.point + dir * EPS;
+
+        float dist = 1000;
+        RaycastHit hit2;
+        if (Physics.Raycast(start, dir, out hit2, dist, layerMask)) {
+            dist = hit2.distance;
+        }
+
+        Assert.IsTrue(Physics.Raycast(start + dir * dist, -dir, out hit2, dist, layerMask));
+        Assert.AreEqual(hit.collider, hit2.collider);
+
+        return 1000 - hit2.distance - EPS;
     }
 
     private void SetEndpoints(float start, float end)
@@ -105,7 +207,7 @@ public class BeamHandler : MonoBehaviour
         collider.center = (end + start) / 2 * Vector3.right;
         collider.height = end - start;
 
-        bool enabled = (end - start) > 1e-4;
+        bool enabled = (end - start) > EPS;
         renderer.enabled = enabled;
         collider.enabled = enabled;
     }
