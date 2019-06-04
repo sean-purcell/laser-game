@@ -6,8 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class GameHandler : MonoBehaviour
 {
-    // FIXME this is too small
-    public const float MAX_UPDATE_TIME = 0.0005f;
+    public const float MAX_UPDATE_TIME = 0.005f;
 
     // FIXME dont default this
     private static string levelName = "dev";

@@ -5,7 +5,6 @@ using UnityEngine.Assertions;
 
 public class BeamHandler : MonoBehaviour
 {
-    // FIXME: we should track start and endpoints, do this with delta-t
     const float SPEED = 5;
 
     private const float EPS = 1e-4f;
@@ -14,6 +13,8 @@ public class BeamHandler : MonoBehaviour
 
     public LineRenderer renderer;
     public CapsuleCollider collider;
+
+    public bool propagating;
 
     public float startTime;
     public float poweredUntil;
@@ -31,6 +32,8 @@ public class BeamHandler : MonoBehaviour
         float ang = Mathf.Atan2(dir.y, dir.x);
         transform.localEulerAngles = new Vector3(0, 0, ang * Mathf.Rad2Deg);
         transform.position = start;
+
+        this.propagating = true;
 
         this.startTime = h.SimTime();
         this.poweredUntil = Mathf.Infinity;
@@ -130,13 +133,11 @@ public class BeamHandler : MonoBehaviour
             return;
         }
 
-        // FIXME: 
-        float newStart = FindOtherSide(hit) + hit.distance;
-        print(newStart + " + " + end);
-        if (newStart <= end - 0.01) {
+        float newStart = FindOtherSide(hit);
+        if (newStart >= end - EPS) {
             // New ray!
             var dir = GetDir();
-            var beam = game.CreateBeam(transform.position + newStart * dir, dir);
+            var beam = game.CreateBeam(hit.point + newStart * dir, dir);
 
             beam.startTime = (end - newStart) / SPEED;
             beam.poweredUntil = game.SimTime() +
@@ -188,9 +189,12 @@ public class BeamHandler : MonoBehaviour
 
         float dist = 1000;
         RaycastHit hit2;
+        if (Physics.Raycast(start, dir, out hit2, dist, layerMask)) {
+            dist = hit2.distance;
+        }
 
-        Assert.IsTrue(hit.collider.Raycast(new Ray(start + dir * dist, -dir), out hit2, dist));
-        // Assert.AreEqual(hit.collider, hit2.collider); // vacuously true
+        Assert.IsTrue(Physics.Raycast(start + dir * dist, -dir, out hit2, dist, layerMask));
+        Assert.AreEqual(hit.collider, hit2.collider);
 
         return 1000 - hit2.distance - EPS;
     }
