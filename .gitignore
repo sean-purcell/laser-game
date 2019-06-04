@@ -1,0 +1,15 @@
+.DS_Store
+*.sln
+*.userprefs
+*.csproj
+*.pidb
+*.unitypackage
+
+*.sw*
+
+/Build/
+/Library/
+/Temp/
+/.vscode/
+/.vs/
+/obj/
