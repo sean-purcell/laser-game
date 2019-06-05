@@ -20,7 +20,7 @@ public class TargetHandler : TileHandler
     void Update()
     {}
 
-    public override void Process()
+    public override void Process(float dt)
     {
         // Check for any collisions with lasers
 

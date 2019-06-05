@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class GameHandler : MonoBehaviour
 {
     // FIXME this is too small, beam logic shouldn't care
-    public const float MAX_UPDATE_TIME = 0.0005f;
+    public const float MAX_UPDATE_TIME = 0.004f;
 
     // FIXME dont default this
     private static string levelName = "dev";
@@ -73,21 +73,21 @@ public class GameHandler : MonoBehaviour
         // Assume time only advances for now
         if (playing) {
             int updates = Mathf.CeilToInt(Time.deltaTime / MAX_UPDATE_TIME);
-            float otime = simTime;
-            for (int i = 1; i <= updates; i++) {
-                simTime = otime + i * Time.deltaTime / updates;
-                DoProcess();
+            float dt = Time.deltaTime / updates;
+            for (int i = 0; i < updates; i++) {
+                simTime += dt;
+                DoProcess(dt);
             }
         }
     }
 
-    private void DoProcess()
+    private void DoProcess(float dt)
     {
         foreach (var beam in GetBeams()) {
-            beam.Process();
+            beam.Process(dt);
         }
         foreach (var tile in GetTiles()) {
-            tile.Process();
+            tile.Process(dt);
         }
     }
 

@@ -15,11 +15,12 @@ public class BeamHandler : MonoBehaviour
     public LineRenderer renderer;
     public CapsuleCollider collider;
 
-    public float startTime;
-    public float poweredUntil;
+    public float start;
+    public float end;
+
+    public bool powered;
 
     public TileHandler endPoint;
-    public float hitDist;
     public List<BeamHandler> children;
 
     int layerMask;
@@ -32,11 +33,12 @@ public class BeamHandler : MonoBehaviour
         transform.localEulerAngles = new Vector3(0, 0, ang * Mathf.Rad2Deg);
         transform.position = start;
 
-        this.startTime = h.SimTime();
-        this.poweredUntil = Mathf.Infinity;
+        this.start = 0;
+        this.end = 0;
+
+        this.powered = true;
 
         this.endPoint = null;
-        this.hitDist = Mathf.Infinity;
         this.children = null;
 
         layerMask = 1 << LayerMask.NameToLayer("Tile");
@@ -55,49 +57,41 @@ public class BeamHandler : MonoBehaviour
     }
 
     // Use custom update called by GameHandler
-    public void Process()
+    public void Process(float dt)
     {
+        // For now assume that dt > 0
         float time = game.SimTime();
-        if (time < startTime) {
-            GameObject.Destroy(gameObject);
-            return;
-        }
 
-        float end = (time - startTime) * SPEED;
-        float start = 0;
-        if (time > poweredUntil) {
-            start = (time - poweredUntil) * SPEED;
-        }
-
+        float dl = dt * SPEED;
         RaycastHit hit;
         bool res = Physics.Raycast(
-                    transform.position,
+                    GetPoint(start),
                     GetDir(),
                     out hit,
-                    end,
+                    end - start + dl,
                     layerMask);
 
         HandleCollision(start, end, res, hit);
         if (res) {
-            end = hit.distance;
+            end = start + hit.distance;
+        } else {
+            end += dl;
+        }
+        if (!powered) {
+            start += dl;
         }
 
-        start = Mathf.Min(start, end);
+        if (start >= end) {
+            DepowerChildren();
+            GameObject.Destroy(gameObject);
+            return;
+        }
 
         SetEndpoints(start, end);
     }
 
     private void HandleCollision(float start, float end, bool hasHit, RaycastHit hit)
     {
-        // Are we now shorter than a pre-existing hit?
-        if (endPoint != null && end < hitDist) {
-            // Delete old hit
-            endPoint = null;
-            hitDist = Mathf.Infinity;
-            // The children will clean themselves up based on startTime
-            children = null;
-        }
-
         TileHandler tile = null;
         if (hasHit) {
             tile = hit
@@ -112,10 +106,9 @@ public class BeamHandler : MonoBehaviour
 
             if (children != null) {
                 foreach (var beam in children) {
-                    beam.SetPoweredUntil(game.SimTime());
+                    beam.powered = false;
                 }
                 endPoint = null;
-                hitDist = Mathf.Infinity;
                 children = null;
             }
         }
@@ -125,54 +118,45 @@ public class BeamHandler : MonoBehaviour
             return;
         }
 
+        // FIXME: if the target changes, e.g. rotates, we want to treat this as
+        // hitting a new object.
         if (tile == endPoint) {
             // We've already handled this collision
             return;
         }
 
-        // FIXME: 
-        float newStart = FindOtherSide(hit) + hit.distance;
-        print(newStart + " + " + end);
-        if (newStart <= end - 0.01) {
-            // New ray!
-            var dir = GetDir();
-            var beam = game.CreateBeam(transform.position + newStart * dir, dir);
+        // If we didn't hit this just in the new segment of the ray
+        if (hit.distance < end - start) {
+            float newStart = start + hit.distance + FindOtherSide(hit);
+            if (newStart <= end - 0.01) {
+                // New ray!
+                var dir = GetDir();
+                var beam = game.CreateBeam(transform.position + newStart * dir, dir);
 
-            beam.startTime = (end - newStart) / SPEED;
-            beam.poweredUntil = game.SimTime() +
-                Mathf.Max(0, start - newStart) / SPEED;
+                beam.end = end - newStart;
 
-            beam.endPoint = endPoint;
-            beam.children = children;
+                beam.powered = false;
+
+                beam.endPoint = endPoint;
+                beam.children = children;
+            }
         }
 
         children = null;
         endPoint = tile;
-        hitDist = hit.distance;
-        // If we've already passed the collision point don't spawn children
-        if (start < hit.distance - EPS) {
-            children = tile.OnBeamCollision(this, hit);
-        }
+        children = tile.OnBeamCollision(this, hit);
         if (children == null) {
             children = new List<BeamHandler>();
         }
-
-        UpdateChildrenPowered();
     }
 
-    private void UpdateChildrenPowered() {
-        if (children == null) return;
-        if (poweredUntil == Mathf.Infinity) return;
-
-        float newTime = hitDist / SPEED + poweredUntil;
+    private void DepowerChildren()
+    {
+        if (children == null)
+            return;
         foreach (var beam in children) {
-            beam.SetPoweredUntil(newTime);
+            beam.powered = false;
         }
-    }
-
-    public void SetPoweredUntil(float until) {
-        poweredUntil = until;
-        UpdateChildrenPowered();
     }
 
     private float FindOtherSide(RaycastHit hit)
@@ -206,6 +190,11 @@ public class BeamHandler : MonoBehaviour
         bool enabled = (end - start) > EPS;
         renderer.enabled = enabled;
         collider.enabled = enabled;
+    }
+
+    public Vector3 GetPoint(float param = 0)
+    {
+        return transform.position + param * GetDir();
     }
 
     public Vector3 GetDir()

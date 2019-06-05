@@ -18,7 +18,7 @@ abstract public class TileHandler : MonoBehaviour
     }
 
     // Called more than once per frame by GameHandler
-    public virtual void Process()
+    public virtual void Process(float dt)
     {
     }
 
