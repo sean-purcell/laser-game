@@ -20,6 +20,7 @@ public class GameHandler : MonoBehaviour
     public BeamHandler beamPrefab;
     public GameObject beamParent;
 
+    public PuzzleHandler puzzle;
     public GameObject tileParent;
 
     public Transform camera;
@@ -32,6 +33,8 @@ public class GameHandler : MonoBehaviour
     void Start()
     {
         Debug.Log("GameHandler.Start");
+
+        InitPuzzle();
         InitTiles();
         InitBeamParent();
 
@@ -89,6 +92,12 @@ public class GameHandler : MonoBehaviour
         foreach (var tile in GetTiles()) {
             tile.Process(dt);
         }
+    }
+
+    private void InitPuzzle()
+    {
+        puzzle = GameObject.Find("/Puzzle").GetComponent<PuzzleHandler>();
+        puzzle.Init();
     }
 
     private void InitTiles()
