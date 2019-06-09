@@ -950,7 +950,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_FirstSelected: {fileID: 0}
   m_sendNavigationEvents: 1
-  m_DragThreshold: 10
+  m_DragThreshold: 44
 --- !u!114 &5796270985873733745
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1148,6 +1148,7 @@ MonoBehaviour:
   beamPrefab: {fileID: 7788798381340195797, guid: 5d94f40bc391ea8488adec93f53e7a31,
     type: 3}
   beamParent: {fileID: 0}
+  puzzle: {fileID: 0}
   tileParent: {fileID: 0}
   camera: {fileID: 5796270984539599350}
   playing: 0
