@@ -20,9 +20,4 @@ public class LaserHandler : TileHandler
     {
         
     }
-
-    public override void Process(float dt)
-    {
-        if (game.SimTime() > 5) beam.powered = false;
-    }
 }
