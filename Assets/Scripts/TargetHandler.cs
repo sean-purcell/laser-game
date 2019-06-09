@@ -9,6 +9,8 @@ public class TargetHandler : TileHandler
 
     int layerMask;
 
+    private bool active;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -19,6 +21,11 @@ public class TargetHandler : TileHandler
 
     void Update()
     {}
+
+    public bool IsActive()
+    {
+        return active;
+    }
 
     public override void Process(float dt)
     {
@@ -31,6 +38,7 @@ public class TargetHandler : TileHandler
         foreach (var col in collisions) {
             Debug.Log("Hit target: " + col.gameObject.name);
         }
+        active = collisions.Length > 0;
         if (collisions.Length > 0) {
             renderer.material.color = Color.cyan;
         } else {

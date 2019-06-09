@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class PuzzleHandler : MonoBehaviour
@@ -10,6 +11,8 @@ public class PuzzleHandler : MonoBehaviour
     public int top;
 
     public Transform wallPrefab;
+
+    public List<TargetHandler> winTargets;
 
     private const int WALL_SIZE = 500;
 
@@ -38,5 +41,10 @@ public class PuzzleHandler : MonoBehaviour
                 (left + right) / 2.0f,
                 (top + bottom) / 2.0f,
                 camera.transform.position.z);
+    }
+
+    public bool IsWin()
+    {
+        return winTargets.All(target => target.IsActive());
     }
 }

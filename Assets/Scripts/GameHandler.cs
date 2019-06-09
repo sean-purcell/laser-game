@@ -9,14 +9,6 @@ public class GameHandler : MonoBehaviour
     // FIXME this is too small, beam logic shouldn't care
     public const float MAX_UPDATE_TIME = 0.004f;
 
-    // FIXME dont default this
-    private static string levelName = "dev";
-
-    public static void OpenLevel(string name) {
-        levelName = name;
-        SceneManager.LoadScene("PuzzleBase");
-    }
-
     public BeamHandler beamPrefab;
     public GameObject beamParent;
 
@@ -81,6 +73,9 @@ public class GameHandler : MonoBehaviour
                 simTime += dt;
                 DoProcess(dt);
             }
+        }
+        if (puzzle.IsWin()) {
+            SceneManager.LoadScene("MainMenu");
         }
     }
 
