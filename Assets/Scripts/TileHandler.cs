@@ -9,7 +9,6 @@ abstract public class TileHandler : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
     }
 
     // Update is called once per frame
@@ -39,4 +38,15 @@ abstract public class TileHandler : MonoBehaviour
         return null;
     }
 
+    public virtual bool IsPositionValid(Vector2 pos)
+    {
+        int collisionLayers =
+            (1 << LayerMask.NameToLayer("Tile")) |
+            (1 << LayerMask.NameToLayer("Glass"));
+        // Assumes this tile is a 1x1 box
+        float size = 0.4999f;
+        var overlap = Physics.OverlapBox(pos, new Vector3(size, size, size),
+                Quaternion.identity, collisionLayers);
+        return overlap.Length == 0;
+    }
 }
