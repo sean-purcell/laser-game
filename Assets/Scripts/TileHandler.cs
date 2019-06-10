@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-abstract public class TileHandler : MonoBehaviour
+public class TileHandler : MonoBehaviour
 {
     protected GameHandler game;
 
