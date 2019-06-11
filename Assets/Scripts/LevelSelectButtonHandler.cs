@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class LevelSelectButtonHandler : MonoBehaviour
 {
+    // TODO(toyang): I wonder if we can get this from "this".
     public Button button;
     public Text levelLabel;
 
@@ -19,7 +20,6 @@ public class LevelSelectButtonHandler : MonoBehaviour
         levelLabel.text = level;
     }
 
-    // TODO(toyang): constructor?
     /**
      * Loads the level that the button has been initialized with.
      * Setup() must have been called already.
@@ -33,11 +33,5 @@ public class LevelSelectButtonHandler : MonoBehaviour
     void Start()
     {
         button.onClick.AddListener(LoadLevel);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

@@ -4,22 +4,20 @@ using UnityEngine;
 
 public class LevelSelectHandler : MonoBehaviour
 {
+    // Populate to programmatically add levels to the selection scrollview
+    // during runtime.
     public List<string> levels;
+
     public GameObject levelSelectButtonPrefab;
-    public Transform contentPanel; // TODO(toyang): I wonder if we can get this from "this"
+
+    // This is where we'll instantiate the new level select buttons.
+    public Transform contentPanel;
 
     // Start is called before the first frame update
     void Start()
     {
         // TODO(toyang): I think we might have to destroy this later, but not sure.
         Populate();
-    }
-
-    // TODO(toyang): I don't think we need this.
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     // Creates a button for each level. 
