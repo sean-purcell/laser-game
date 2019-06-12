@@ -392,6 +392,8 @@ MonoBehaviour:
   - Puzzle1
   - Puzzle2
   - Puzzle3
+  - Puzzle4
+  - Puzzle5
   levelSelectButtonPrefab: {fileID: 9037616614760888752, guid: 1d28f01774f35fe45857cd77a79581d4,
     type: 3}
   contentPanel: {fileID: 216955771}
