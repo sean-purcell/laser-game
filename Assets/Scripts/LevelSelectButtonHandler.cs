@@ -6,8 +6,6 @@ using UnityEngine.SceneManagement;
 
 public class LevelSelectButtonHandler : MonoBehaviour
 {
-    // TODO(toyang): I wonder if we can get this from "this".
-    public Button button;
     public Text levelLabel;
 
     // Maybe this should have some sensible default value?
@@ -27,11 +25,5 @@ public class LevelSelectButtonHandler : MonoBehaviour
     public void LoadLevel()
     {
         SceneManager.LoadScene(level);
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        button.onClick.AddListener(LoadLevel);
     }
 }
