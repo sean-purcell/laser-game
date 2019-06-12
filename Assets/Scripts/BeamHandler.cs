@@ -43,7 +43,7 @@ public class BeamHandler : MonoBehaviour
 
         layerMask = 1 << LayerMask.NameToLayer("Tile");
 
-        SetEndpoints(0, 0);
+        SetEndpoints();
     }
 
     // Start is called before the first frame update
@@ -87,7 +87,7 @@ public class BeamHandler : MonoBehaviour
             return;
         }
 
-        SetEndpoints(start, end);
+        SetEndpoints();
     }
 
     private void HandleCollision(float start, float end, bool hasHit, RaycastHit hit)
@@ -139,6 +139,8 @@ public class BeamHandler : MonoBehaviour
 
                 beam.endPoint = endPoint;
                 beam.children = children;
+
+                beam.SetEndpoints();
             }
         }
 
@@ -179,7 +181,7 @@ public class BeamHandler : MonoBehaviour
         return 1000 - hit2.distance - EPS;
     }
 
-    private void SetEndpoints(float start, float end)
+    private void SetEndpoints()
     {
         renderer.SetPosition(0, start * Vector3.right);
         renderer.SetPosition(1, end * Vector3.right);

@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class TargetHandler : TileHandler
 {
+    // Time the target must be active for before marking itself active
+    public float cutoff = 0.5f;
 
     private Renderer renderer;
 
-    int layerMask;
+    private int layerMask;
 
-    private bool active;
+    private float activeTime;
 
     // Start is called before the first frame update
     void Start()
@@ -17,6 +19,8 @@ public class TargetHandler : TileHandler
         layerMask = 1 << LayerMask.NameToLayer("Beam");
         renderer = GetComponent<Renderer>();
         renderer.material.color = Color.grey;
+
+        activeTime = 0;
     }
 
     void Update()
@@ -24,7 +28,7 @@ public class TargetHandler : TileHandler
 
     public bool IsActive()
     {
-        return active;
+        return activeTime >= cutoff;
     }
 
     public override void Process(float dt)
@@ -35,11 +39,12 @@ public class TargetHandler : TileHandler
                 transform.position,
                 transform.localScale.x / 2,
                 layerMask);
-        foreach (var col in collisions) {
-            Debug.Log("Hit target: " + col.gameObject.name);
-        }
-        active = collisions.Length > 0;
         if (collisions.Length > 0) {
+            activeTime += dt;
+        } else {
+            activeTime = 0;
+        }
+        if (IsActive()) {
             renderer.material.color = Color.cyan;
         } else {
             renderer.material.color = Color.grey;
