@@ -2,6 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/* There are two steps to adding a level (scene) to this menu:
+ * 1. In the MainMenu/Canvas/LevelsPanel, add the
+      scene's name to the "Levels" field
+ * 2. In File->Build Settings, add the new scene to "Scenes In Build"
+ */
+
 public class LevelSelectHandler : MonoBehaviour
 {
     // Populate to programmatically add levels to the selection scrollview
