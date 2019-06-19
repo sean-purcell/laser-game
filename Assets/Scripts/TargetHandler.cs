@@ -7,27 +7,41 @@ public class TargetHandler : TileHandler
     // Time the target must be active for before marking itself active
     public float cutoff = 0.5f;
 
-    private Renderer renderer;
-
     private int layerMask;
 
     private float activeTime;
+
+    private Renderer renderer;
+    private int fillProperty;
 
     // Start is called before the first frame update
     void Start()
     {
         layerMask = 1 << LayerMask.NameToLayer("Beam");
-        renderer = GetComponent<Renderer>();
-        renderer.material.color = Color.grey;
 
         activeTime = 0;
+
+        renderer = GetComponent<Renderer>();
+        fillProperty = Shader.PropertyToID("_Fill");
     }
 
     void Update()
-    {}
+    {
+        float fill;
+        if (cutoff <= 1e-4) {
+            fill = IsActive() ? 1 : 0;
+        } else {
+            fill = Mathf.Min(1.0f, activeTime / cutoff);
+        }
+        renderer.material.SetFloat(fillProperty, fill);
+    }
 
     public bool IsActive()
     {
+        // Activate instantly, but still require a collision
+        if (cutoff <= 1e-4) {
+            return activeTime > 0;
+        }
         return activeTime >= cutoff;
     }
 
@@ -43,11 +57,6 @@ public class TargetHandler : TileHandler
             activeTime += dt;
         } else {
             activeTime = 0;
-        }
-        if (IsActive()) {
-            renderer.material.color = Color.cyan;
-        } else {
-            renderer.material.color = Color.grey;
         }
     }
 }
