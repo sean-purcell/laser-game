@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 /* There are two steps to adding a level (scene) to this menu:
  * 1. In the MainMenu/Canvas/LevelsPanel, add the
@@ -17,7 +18,7 @@ public class LevelSelectHandler : MonoBehaviour
     public GameObject levelSelectButtonPrefab;
 
     // This is where we'll instantiate the new level select buttons.
-    public Transform contentPanel;
+    public GameObject contentPanel;
 
     // Start is called before the first frame update
     void Start()
@@ -32,9 +33,9 @@ public class LevelSelectHandler : MonoBehaviour
         foreach (string level in levels)
         {
             var newButton = (GameObject)Instantiate(levelSelectButtonPrefab);
-            newButton.transform.SetParent(contentPanel);
+            newButton.transform.SetParent(contentPanel.GetComponent<Transform>(), false);
 
-            var buttonHandler = newButton.GetComponent<LevelSelectButtonHandler>(); 
+            var buttonHandler = newButton.GetComponent<LevelSelectButtonHandler>();
             buttonHandler.Setup(level);
         }
     }
