@@ -175,7 +175,7 @@ public class BeamHandler : MonoBehaviour
         float dist = 1000;
         RaycastHit hit2;
 
-        Assert.IsTrue(hit.collider.Raycast(new Ray(start + dir * dist, -dir), out hit2, dist));
+        hit.collider.Raycast(new Ray(start + dir * dist, -dir), out hit2, dist);
         // Assert.AreEqual(hit.collider, hit2.collider); // vacuously true
 
         return 1000 - hit2.distance - EPS;
