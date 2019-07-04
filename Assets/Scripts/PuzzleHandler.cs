@@ -19,6 +19,7 @@ public class PuzzleHandler : MonoBehaviour
     // Start is called before the first frame update
     public void Init()
     {
+        /*
         // Instantiate the walls
 
         var tileParent = GameObject.Find("/Tiles");
@@ -41,6 +42,7 @@ public class PuzzleHandler : MonoBehaviour
                 (left + right) / 2.0f,
                 (top + bottom) / 2.0f,
                 camera.transform.position.z);
+                */
     }
 
     public bool IsWin()
