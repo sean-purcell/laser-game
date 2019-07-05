@@ -29,8 +29,7 @@ public class BeamHandler : MonoBehaviour
     {
         this.game = h;
 
-        float ang = Mathf.Atan2(dir.y, dir.x);
-        transform.localEulerAngles = new Vector3(0, 0, ang * Mathf.Rad2Deg);
+        transform.rotation = Quaternion.FromToRotation(Vector3.right, dir);
         transform.position = start;
 
         this.start = 0;

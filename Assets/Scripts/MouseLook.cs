@@ -21,13 +21,9 @@ public class MouseLook : MonoBehaviour
         }
         rotationY += Input.GetAxis("Mouse Y") * sensitivity.y;
 
-        Debug.Log("Before " + new Vector2(rotationX, rotationY).ToString());
-
         rotationX = Mathf.Repeat(rotationX, 360);
         rotationY = Mathf.Clamp(rotationY, -85, 85);
 
-        Debug.Log("After " + new Vector2(rotationX, rotationY).ToString());
-        
         transform.localEulerAngles = new Vector3(-rotationY, rotationX, 0);
     }
 }

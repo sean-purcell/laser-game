@@ -65,6 +65,7 @@ public class GameHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        ProcessInput();
         // Assume time only advances for now
         if (playing) {
             int updates = Mathf.CeilToInt(Time.deltaTime / MAX_UPDATE_TIME);
@@ -75,6 +76,16 @@ public class GameHandler : MonoBehaviour
             }
         }
         if (puzzle.IsWin()) {
+            SceneManager.LoadScene("MainMenu");
+        }
+    }
+
+    private void ProcessInput()
+    {
+        if (Input.GetKeyDown("space")) {
+            playing = !playing;
+        }
+        if (Input.GetKeyDown("q")) {
             SceneManager.LoadScene("MainMenu");
         }
     }

@@ -38,6 +38,7 @@ public class PuzzleHandler : MonoBehaviour
             wall.localScale = new Vector3(WALL_SIZE, WALL_SIZE, 1);
         }
 
+
         camera.transform.position = new Vector3(
                 (left + right) / 2.0f,
                 (top + bottom) / 2.0f,
