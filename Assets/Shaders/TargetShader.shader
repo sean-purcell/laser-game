@@ -42,7 +42,7 @@
         void surf (Input IN, inout SurfaceOutputStandard o)
         {
             fixed4 c = _BaseColour;
-            if ((IN.uv_Texture.x < _Fill && _Fill > 1e-4) || _Fill > 0.9999) {
+            if ((IN.uv_Texture.y < _Fill && _Fill > 1e-4) || _Fill > 0.9999) {
                 c = _FillColour;
             }
             o.Albedo = c.rgb;

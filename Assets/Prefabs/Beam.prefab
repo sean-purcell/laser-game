@@ -48,8 +48,11 @@ MonoBehaviour:
   game: {fileID: 0}
   renderer: {fileID: 7788798381340195796}
   collider: {fileID: -1570335425346868095}
-  propagating: 0
-  startTime: 0
+  start: 0
+  end: 0
+  powered: 0
+  endPoint: {fileID: 0}
+  children: []
 --- !u!120 &7788798381340195796
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -153,7 +156,7 @@ CapsuleCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7788798381340195802}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   m_Radius: 0.025
   m_Height: 0

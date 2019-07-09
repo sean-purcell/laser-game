@@ -51,7 +51,10 @@ public class PlayerHandler : MonoBehaviour
     {
         // Leave the object wherever it was
         // TODO: this will leave objects in midair
-        carrying = null;
+        if (carrying != null) {
+            carrying.dragging = false;
+            carrying = null;
+        }
     }
 
     private void Teleport(RaycastHit hit) {
@@ -70,6 +73,7 @@ public class PlayerHandler : MonoBehaviour
     {
         if (dh.enabled) {
             carrying = dh;
+            carrying.dragging = true;
         }
     }
 
