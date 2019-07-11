@@ -21,6 +21,8 @@ public class GameHandler : MonoBehaviour
 
     public float simTime;
 
+    public Action cleanup;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -32,6 +34,8 @@ public class GameHandler : MonoBehaviour
 
         playing = false;
         simTime = 0;
+
+        cleanup = null;
     }
 
     public void Play()
@@ -66,15 +70,6 @@ public class GameHandler : MonoBehaviour
     void Update()
     {
         ProcessInput();
-        // Assume time only advances for now
-        if (playing) {
-            int updates = Mathf.CeilToInt(Time.deltaTime / MAX_UPDATE_TIME);
-            float dt = Time.deltaTime / updates;
-            for (int i = 0; i < updates; i++) {
-                simTime += dt;
-                DoProcess(dt);
-            }
-        }
         if (puzzle.IsWin()) {
             SceneManager.LoadScene("MainMenu");
         }
@@ -90,13 +85,26 @@ public class GameHandler : MonoBehaviour
         }
     }
 
+    void FixedUpdate()
+    {
+        // Assume time only advances for now
+        if (playing) {
+            simTime += Time.fixedDeltaTime;
+            DoProcess(Time.fixedDeltaTime);
+        }
+    }
+
     private void DoProcess(float dt)
     {
+        cleanup = null;
+        foreach (var tile in GetTiles()) {
+            tile.Process(dt);
+        }
         foreach (var beam in GetBeams()) {
             beam.Process(dt);
         }
-        foreach (var tile in GetTiles()) {
-            tile.Process(dt);
+        if (cleanup != null) {
+            cleanup();
         }
     }
 

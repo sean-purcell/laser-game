@@ -21,6 +21,8 @@ public class BeamHandler : MonoBehaviour
     public bool powered;
 
     public TileHandler endPoint;
+    public Vector3 hitPoint;
+    public Vector3 hitNormal;
     public List<BeamHandler> children;
 
     int layerMask;
@@ -70,7 +72,7 @@ public class BeamHandler : MonoBehaviour
                     end - start + dl,
                     layerMask);
 
-        HandleCollision(start, end, res, hit);
+        HandleCollision(dt, start, end, res, hit);
         if (res) {
             end = start + hit.distance;
         } else {
@@ -82,6 +84,7 @@ public class BeamHandler : MonoBehaviour
 
         if (start >= end) {
             DepowerChildren();
+            Debug.Log("Beam self-destroying", this);
             GameObject.Destroy(gameObject);
             return;
         }
@@ -89,7 +92,7 @@ public class BeamHandler : MonoBehaviour
         SetEndpoints();
     }
 
-    private void HandleCollision(float start, float end, bool hasHit, RaycastHit hit)
+    private void HandleCollision(float dt, float start, float end, bool hasHit, RaycastHit hit)
     {
         TileHandler tile = null;
         if (hasHit) {
@@ -99,17 +102,17 @@ public class BeamHandler : MonoBehaviour
                 .GetComponentInParent<TileHandler>();
         }
 
-        if (!hasHit || tile != endPoint) {
+        bool hitMatches = hasHit && endPoint == tile &&
+                ApproxEqual(hit.point, hitPoint) &&
+                ApproxEqual(hit.normal, hitNormal);
+        if (children != null && (!hasHit || !hitMatches)) {
             // If we have a real hit that doesn't exist anymore (because the
             // source moved), stop powering the children.
 
-            if (children != null) {
-                foreach (var beam in children) {
-                    beam.powered = false;
-                }
-                endPoint = null;
-                children = null;
-            }
+            Debug.Log("Hit lost " + hasHit + " " + hitMatches, this);
+            DepowerChildren();
+            endPoint = null;
+            children = null;
         }
 
         // If we don't have a hit theres nothing to do
@@ -117,9 +120,7 @@ public class BeamHandler : MonoBehaviour
             return;
         }
 
-        // FIXME: if the target changes, e.g. rotates, we want to treat this as
-        // hitting a new object.
-        if (tile == endPoint) {
+        if (hitMatches) {
             // We've already handled this collision
             return;
         }
@@ -145,10 +146,17 @@ public class BeamHandler : MonoBehaviour
 
         children = null;
         endPoint = tile;
+        hitPoint = hit.point;
+        hitNormal = hit.normal;
         children = tile.OnBeamCollision(this, hit);
         if (children == null) {
             children = new List<BeamHandler>();
         }
+    }
+
+    private bool ApproxEqual(Vector3 a, Vector3 b, float prec=1e-3f)
+    {
+        return (a-b).sqrMagnitude <= prec*prec;
     }
 
     private void DepowerChildren()
@@ -156,7 +164,9 @@ public class BeamHandler : MonoBehaviour
         if (children == null)
             return;
         foreach (var beam in children) {
-            beam.powered = false;
+            game.cleanup += delegate () {
+                beam.powered = false;
+            };
         }
     }
 
@@ -188,7 +198,7 @@ public class BeamHandler : MonoBehaviour
         collider.center = (end + start) / 2 * Vector3.right;
         collider.height = end - start;
 
-        bool enabled = (end - start) > EPS;
+        bool enabled = (end - start) > 0;
         renderer.enabled = enabled;
         collider.enabled = enabled;
     }
