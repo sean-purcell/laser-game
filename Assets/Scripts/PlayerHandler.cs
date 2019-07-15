@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerHandler : MonoBehaviour
 {
+    public Transform camera;
+
     public float MAX_DIST = 100.0f;
 
     public float holdDistance = 10;
@@ -21,15 +23,40 @@ public class PlayerHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0)) {
+        if (CheckMouseDown()) {
             MouseDown();
         }
         if (carrying != null) {
             UpdateCarrying();
         }
-        if (Input.GetMouseButtonUp(0)) {
+        if (CheckMouseUp()) {
             MouseUp();
         }
+    }
+
+    private bool CheckMouseDown()
+    {
+        if (Input.GetMouseButtonDown(0)) {
+            return true;
+        }
+        if (Input.touchCount > 0 &&
+                Input.GetTouch(0).phase == TouchPhase.Began) {
+            return true;
+        }
+        return false;
+    }
+
+    private bool CheckMouseUp()
+    {
+        if (Input.GetMouseButtonUp(0)) {
+            return true;
+        }
+        if (Input.touchCount > 0 && (
+                Input.GetTouch(0).phase == TouchPhase.Ended || 
+                Input.GetTouch(0).phase == TouchPhase.Canceled)) {
+            return true;
+        }
+        return false;
     }
 
     private void MouseDown()
@@ -97,6 +124,6 @@ public class PlayerHandler : MonoBehaviour
 
     public Vector3 GetDir()
     {
-        return transform.TransformDirection(Vector3.forward);
+        return camera.TransformDirection(Vector3.forward);
     }
 }

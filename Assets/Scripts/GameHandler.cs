@@ -32,7 +32,6 @@ public class GameHandler : MonoBehaviour
         InitTiles();
         InitBeamParent();
 
-        playing = false;
         simTime = 0;
 
         cleanup = null;
