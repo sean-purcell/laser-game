@@ -846,6 +846,7 @@ GameObject:
   m_Component:
   - component: {fileID: 245288986}
   - component: {fileID: 245288987}
+  - component: {fileID: 245288988}
   m_Layer: 0
   m_Name: Puzzle
   m_TagString: Untagged
@@ -887,6 +888,19 @@ MonoBehaviour:
     type: 3}
   winTargets:
   - {fileID: 145905843}
+--- !u!114 &245288988
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 245288985}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc05981b2babf0b4b8c4926e3a068491, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  vr: 1
 --- !u!1001 &373451269
 PrefabInstance:
   m_ObjectHideFlags: 0

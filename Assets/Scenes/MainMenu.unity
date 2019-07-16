@@ -399,6 +399,7 @@ MonoBehaviour:
   - Puzzle8
   - Puzzle2FP
   - Puzzle9FP
+  - Puzzle2VR
   levelSelectButtonPrefab: {fileID: 9037616614760888752, guid: 1d28f01774f35fe45857cd77a79581d4,
     type: 3}
   contentPanel: {fileID: 216955770}
@@ -1251,6 +1252,7 @@ GameObject:
   - component: {fileID: 1643253542}
   - component: {fileID: 1643253541}
   - component: {fileID: 1643253545}
+  - component: {fileID: 1643253546}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -1353,6 +1355,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   newGameScene: Puzzle1
+--- !u!114 &1643253546
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1643253540}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc05981b2babf0b4b8c4926e3a068491, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  vr: 0
 --- !u!1 &1721693507
 GameObject:
   m_ObjectHideFlags: 0
