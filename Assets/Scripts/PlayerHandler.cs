@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerHandler : MonoBehaviour
+public abstract class PlayerHandler : MonoBehaviour
 {
-    public Transform camera;
+    new public Camera camera;
 
     public float MAX_DIST = 100.0f;
 
@@ -14,10 +14,7 @@ public class PlayerHandler : MonoBehaviour
 
     public FPDragHandler carrying = null;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+    void Start() {
     }
 
     // Update is called once per frame
@@ -62,6 +59,7 @@ public class PlayerHandler : MonoBehaviour
     private void MouseDown()
     {
         // Find out what got hit
+        Debug.Log("Mouse down, pos: " + GetPos() + ", dir: " + GetDir(), this);
         if (!Physics.Raycast(GetPos(), GetDir(), out RaycastHit hit, MAX_DIST))
             return;
         Collider collider = hit.collider;
@@ -84,11 +82,7 @@ public class PlayerHandler : MonoBehaviour
         }
     }
 
-    private void Teleport(RaycastHit hit) {
-        Vector3 npos = hit.point;
-        npos.y = 2;
-        transform.position = npos;
-    }
+    protected abstract void Teleport(RaycastHit hit);
 
     private bool GetDragHandler(Collider c, out FPDragHandler dh)
     {
@@ -117,13 +111,7 @@ public class PlayerHandler : MonoBehaviour
         carrying.SetTarget(targetPos);
     }
 
-    public Vector3 GetPos()
-    {
-        return transform.position;
-    }
+    public abstract Vector3 GetPos();
 
-    public Vector3 GetDir()
-    {
-        return camera.TransformDirection(Vector3.forward);
-    }
+    public abstract Vector3 GetDir();
 }
