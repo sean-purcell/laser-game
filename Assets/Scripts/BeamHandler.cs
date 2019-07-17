@@ -12,8 +12,8 @@ public class BeamHandler : MonoBehaviour
 
     public GameHandler game;
 
-    public LineRenderer renderer;
-    public CapsuleCollider collider;
+    new public LineRenderer renderer;
+    new public CapsuleCollider collider;
 
     public float start;
     public float end;
