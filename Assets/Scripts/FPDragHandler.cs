@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class FPDragHandler : MonoBehaviour
+public class FPDragHandler : MonoBehaviour, IDragHandler
 {
     private Rigidbody rb;
 
@@ -30,5 +31,10 @@ public class FPDragHandler : MonoBehaviour
         Vector3 dist = target - transform.position;
         Vector3 npos = Vector3.MoveTowards(transform.position, target, 1);
         rb.velocity = (npos - transform.position) * maxSpeed;
+    }
+
+    public void OnDrag(PointerEventData data)
+    {
+        // Only implementing this interface to get marked as interactive by GVR
     }
 }
