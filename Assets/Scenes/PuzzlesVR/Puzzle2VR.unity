@@ -366,6 +366,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 970dd4b9371394fb4890965f608d46fd, type: 3}
+--- !u!4 &47095781 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 498412, guid: 970dd4b9371394fb4890965f608d46fd,
+    type: 3}
+  m_PrefabInstance: {fileID: 47095780}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &85835912
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1067,25 +1073,72 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 245288985}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c9262e41aa0c92f428acdcde0230d426, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mode: 0
+  mode: 1
   enableLists:
   - mode: 0
-    components:
+    objects:
+    - {fileID: 2089533978}
     - {fileID: 1837096181}
-    gameObjects:
-    - {fileID: 2089533977}
-    - {fileID: 0}
-  - mode: 0
-    components: []
-    gameObjects: []
-  - mode: 0
-    components: []
-    gameObjects: []
+    extra:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 245288988}
+          m_MethodName: disableVr
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 1
+      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+  - mode: 1
+    objects:
+    - {fileID: 545300236}
+    extra:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 245288988}
+          m_MethodName: disableVr
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 1
+      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+  - mode: 2
+    objects:
+    - {fileID: 2089533978}
+    - {fileID: 47095781}
+    extra:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 245288988}
+          m_MethodName: enableVr
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 1
+      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
 --- !u!1 &333981434
 GameObject:
   m_ObjectHideFlags: 0
@@ -2736,7 +2789,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1837096177}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fdfecf0c45455824488342cd1aa40405, type: 3}
   m_Name: 
@@ -3170,7 +3223,7 @@ GameObject:
   - component: {fileID: 2089533978}
   - component: {fileID: 2089533979}
   m_Layer: 0
-  m_Name: Player
+  m_Name: FpPlayer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

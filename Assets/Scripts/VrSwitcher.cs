@@ -12,13 +12,17 @@ public class VrSwitcher : MonoBehaviour
     void Start()
     {
         if (vr) {
-            StartCoroutine(enableVr());
+            enableVr();
         } else {
-            StartCoroutine(disableVr());
+            disableVr();
         }
     }
 
-    public static IEnumerator enableVr() {
+    public void enableVr() {
+        StartCoroutine(enableVrCoro());
+    }
+
+    private static IEnumerator enableVrCoro() {
         string device = "cardboard";
 
         if (string.Compare(XRSettings.loadedDeviceName, device, true) != 0) {
@@ -29,7 +33,11 @@ public class VrSwitcher : MonoBehaviour
         XRSettings.enabled = true;
     }
 
-    public static IEnumerator disableVr() {
+    public void disableVr() {
+        StartCoroutine(disableVrCoro());
+    }
+
+    private static IEnumerator disableVrCoro() {
         XRSettings.LoadDeviceByName("");
         yield return null;
     }
