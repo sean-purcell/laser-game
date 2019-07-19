@@ -5,6 +5,9 @@ using UnityEngine.Assertions;
 
 public class BeamHandler : MonoBehaviour
 {
+    public const int MAX_BEAMS = 100;
+    public static int beamCount = 0;
+
     // FIXME: we should track start and endpoints, do this with delta-t
     const float SPEED = 5;
 
@@ -29,6 +32,12 @@ public class BeamHandler : MonoBehaviour
 
     public void InitBeam(GameHandler h, Vector3 start, Vector3 dir)
     {
+        if (beamCount >= MAX_BEAMS) {
+            GameObject.Destroy(gameObject);
+            return;
+        }
+        beamCount++;
+
         this.game = h;
 
         transform.rotation = Quaternion.FromToRotation(Vector3.right, dir);
@@ -84,8 +93,8 @@ public class BeamHandler : MonoBehaviour
 
         if (start >= end) {
             DepowerChildren();
-            Debug.Log("Beam self-destroying", this);
             GameObject.Destroy(gameObject);
+            beamCount--;
             return;
         }
 
@@ -108,8 +117,6 @@ public class BeamHandler : MonoBehaviour
         if (children != null && (!hasHit || !hitMatches)) {
             // If we have a real hit that doesn't exist anymore (because the
             // source moved), stop powering the children.
-
-            Debug.Log("Hit lost " + hasHit + " " + hitMatches, this);
             DepowerChildren();
             endPoint = null;
             children = null;
