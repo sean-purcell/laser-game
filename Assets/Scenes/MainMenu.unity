@@ -397,9 +397,7 @@ MonoBehaviour:
   - Puzzle6
   - Puzzle7
   - Puzzle8
-  - Puzzle2FP
-  - Puzzle9FP
-  - Puzzle2VR
+  - Puzzle9
   levelSelectButtonPrefab: {fileID: 9037616614760888752, guid: 1d28f01774f35fe45857cd77a79581d4,
     type: 3}
   contentPanel: {fileID: 216955770}
@@ -974,8 +972,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1427359645}
   m_HandleRect: {fileID: 1427359644}
   m_Direction: 0
-  m_Value: 1
-  m_Size: 1
+  m_Value: 0
+  m_Size: 0.99999994
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
