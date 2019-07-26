@@ -13,6 +13,8 @@ public class TargetHandler : TileHandler
 
     private Renderer renderer;
     private int fillProperty;
+    private int fillColourProperty;
+    private int emissionProperty;
 
     // Start is called before the first frame update
     void Start()
@@ -23,6 +25,8 @@ public class TargetHandler : TileHandler
 
         renderer = GetComponent<Renderer>();
         fillProperty = Shader.PropertyToID("_Fill");
+        fillColourProperty = Shader.PropertyToID("_FillColour");
+        emissionProperty = Shader.PropertyToID("_Emission");
     }
 
     void Update()
@@ -58,5 +62,12 @@ public class TargetHandler : TileHandler
         } else {
             activeTime = 0;
         }
+    }
+
+    public void ShowWin()
+    {
+        // Change fill colour to green & turn on emission
+        renderer.material.SetColor(fillColourProperty, Color.green);
+        renderer.material.SetFloat(emissionProperty, 1);
     }
 }

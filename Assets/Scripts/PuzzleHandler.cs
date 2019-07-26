@@ -50,4 +50,11 @@ public class PuzzleHandler : MonoBehaviour
     {
         return winTargets.All(target => target.IsActive());
     }
+
+    public void UpdateWinTargets()
+    {
+        foreach (TargetHandler target in winTargets) {
+            target.ShowWin();
+        }
+    }
 }

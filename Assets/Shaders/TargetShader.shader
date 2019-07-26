@@ -5,6 +5,8 @@
         _BaseColour ("Base Colour", Color) = (1,1,1,1)
         _FillColour ("Fill Colour", Color) = (0,0,0,1)
         _Fill ("Fill", Range(0,1)) = 0
+        _EmissionColour ("Emission Colour", Color) = (0.224,1,0.078,1)
+        _Emission ("Emission", Range(0,1)) = 0
         _Glossiness ("Smoothness", Range(0,1)) = 0.5
         _Metallic ("Metallic", Range(0,1)) = 0.0
         _Texture ("Texture", 2D) = "white" {}
@@ -28,7 +30,9 @@
 
         fixed4 _BaseColour;
         fixed4 _FillColour;
+        fixed4 _EmissionColour;
         half _Fill;
+        half _Emission;
         half _Glossiness;
         half _Metallic;
 
@@ -51,6 +55,11 @@
             // Metallic and smoothness come from slider variables
             o.Metallic = _Metallic;
             o.Smoothness = _Glossiness;
+            
+            // Emission is toggled programmatically when a win is detected
+            if (_Emission > 0) { // float is used here only bc there's no support for bool inputs
+                o.Emission = _EmissionColour;
+            }
         }
         ENDCG
     }

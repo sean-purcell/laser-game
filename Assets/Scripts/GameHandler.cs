@@ -69,8 +69,10 @@ public class GameHandler : MonoBehaviour
     void Update()
     {
         ProcessInput();
-        if (puzzle.IsWin()) {
-            SceneManager.LoadScene("MainMenu");
+        if (puzzle.IsWin()){
+            puzzle.UpdateWinTargets();
+
+            // TODO: "Next puzzle" button should appear on the navigation menu
         }
     }
 
