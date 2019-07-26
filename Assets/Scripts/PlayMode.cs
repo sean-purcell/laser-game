@@ -64,4 +64,14 @@ public class PlayMode : MonoBehaviour
             }
         }
     }
+
+    public void UnlockCursor()
+    {
+        Cursor.lockState = CursorLockMode.None;
+    }
+
+    public void LockCursor()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+    }
 }
