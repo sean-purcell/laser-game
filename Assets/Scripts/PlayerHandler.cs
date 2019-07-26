@@ -10,6 +10,8 @@ public abstract class PlayerHandler : MonoBehaviour
 
     public float holdDistance = 10;
 
+    public bool TeleportOn = true;
+
     public Collider floor;
 
     public FPDragHandler carrying = null;
@@ -74,7 +76,7 @@ public abstract class PlayerHandler : MonoBehaviour
         Collider collider = hit.collider;
         Debug.Log("Click collided with " + collider, this);
 
-        if (collider == floor) {
+        if (TeleportOn && collider == floor) {
             Teleport(hit);
         } else if (GetDragHandler(collider, out FPDragHandler dh)) {
             PickUpObject(dh);
