@@ -18,6 +18,7 @@ public class LaserHandler : TileHandler
     // Update is called once per frame
     void Update()
     {
-        
+        // Update the position of the beam to track the position of the laser
+        beam.transform.position = transform.TransformPoint(new Vector3(0, 0.5f, 0));
     }
 }
