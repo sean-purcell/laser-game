@@ -23,12 +23,21 @@ public abstract class PlayerHandler : MonoBehaviour
         if (CheckMouseDown()) {
             MouseDown();
         }
-        if (carrying != null) {
-            UpdateCarrying();
-        }
         if (CheckMouseUp()) {
             MouseUp();
         }
+    }
+
+    void FixedUpdate()
+    {
+        if (carrying != null) {
+            UpdateCarrying();
+        }
+    }
+
+    public bool IsCarrying()
+    {
+        return carrying != null;
     }
 
     private bool CheckMouseDown()

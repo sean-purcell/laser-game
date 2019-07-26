@@ -87,10 +87,22 @@ public class GameHandler : MonoBehaviour
     void FixedUpdate()
     {
         // Assume time only advances for now
-        if (playing) {
+        if (IsPlaying()) {
             simTime += Time.fixedDeltaTime;
             DoProcess(Time.fixedDeltaTime);
         }
+    }
+
+    private bool IsPlaying()
+    {
+        // For now only pause when carrying an item
+        foreach (var player in GameObject.Find("/PuzzleBase/Player")
+                    .GetComponentsInChildren<PlayerHandler>()) {
+            if (player.IsCarrying()) {
+                return false;
+            }
+        }
+        return true;
     }
 
     private void DoProcess(float dt)
