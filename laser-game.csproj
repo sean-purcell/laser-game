@@ -781,6 +781,7 @@
     <None Include="Assets\GoogleVR\Shaders\Video\VideoUnlitShader.shader" />
     <None Include="Assets\Scripts\Scripts.asmdef" />
     <None Include="Assets\Scripts\Tests\Tests.asmdef" />
+    <None Include="Assets\Shaders\MirrorReflection.shader" />
     <None Include="Assets\Shaders\TargetShader.shader" />
     <None Include="Packages\com.unity.analytics\DataPrivacy\Unity.Analytics.DataPrivacy.asmdef" />
     <None Include="Packages\com.unity.analytics\Tests\Editor\Unity.Analytics.StandardEvents\Unity.Analytics.StandardEvents.EditorTests.asmdef" />
