@@ -7,9 +7,9 @@ public class DoorHandler : TileHandler
     // TODO: this approach doesnt support dragging, if needed modify this
     public TargetHandler target;
 
-    public Vector2 endOffset;
+    public Vector3 endOffset;
     // Public to allow starting at non-base
-    public Vector2 currentOffset;
+    public Vector3 currentOffset;
     public float speed = 1.0f;
 
     private Vector3 basePos;
@@ -17,7 +17,7 @@ public class DoorHandler : TileHandler
     // Start is called before the first frame update
     void Start()
     {
-        basePos = transform.position;
+        basePos = transform.position - currentOffset;
     }
 
     void Update()
@@ -27,13 +27,13 @@ public class DoorHandler : TileHandler
 
     public override void Process(float dt)
     {
-        Vector2 dest = Vector2.zero;
-        if (target.IsActive()) {
+        Vector3 dest = Vector3.zero;
+        if (target != null && target.IsActive()) {
             dest = endOffset;
         }
-        Vector2 diff = dest - currentOffset;
+        Vector3 diff = dest - currentOffset;
         if (diff.magnitude > 1e-8) {
-            Vector2 update = diff.normalized *
+            Vector3 update = diff.normalized *
                 Mathf.Min(diff.magnitude, speed * dt);
             currentOffset += update;
         }
