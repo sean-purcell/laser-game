@@ -81,8 +81,9 @@ public abstract class PlayerHandler : MonoBehaviour
         Collider collider = hit.collider;
         Debug.Log("Click collided with " + collider, this);
 
-        if (TeleportOn && collider == floor) {
-            Teleport(hit);
+        if (collider == floor) {
+            if (TeleportOn)
+                Teleport(hit);
         } else if (GetDragHandler(collider, out FPDragHandler dh)) {
             PickUpObject(dh);
         }

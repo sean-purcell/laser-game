@@ -11,6 +11,8 @@ public class FPDragHandler : MonoBehaviour, IDragHandler
 
     public bool dragging;
 
+    public Vector3 target;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -20,17 +22,20 @@ public class FPDragHandler : MonoBehaviour, IDragHandler
 
     void FixedUpdate()
     {
-        if (dragging)
+        if (dragging) {
             rb.constraints &= ~RigidbodyConstraints.FreezePosition;
-        else
+
+            Vector3 dist = target - transform.position;
+            Vector3 npos = Vector3.MoveTowards(transform.position, target, 1);
+            rb.velocity = (npos - transform.position) * maxSpeed;
+        } else {
             rb.constraints |= RigidbodyConstraints.FreezePosition;
+        }
     }
 
     public void SetTarget(Vector3 target)
     {
-        Vector3 dist = target - transform.position;
-        Vector3 npos = Vector3.MoveTowards(transform.position, target, 1);
-        rb.velocity = (npos - transform.position) * maxSpeed;
+        this.target = target;
     }
 
     public void OnDrag(PointerEventData data)
