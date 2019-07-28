@@ -51,7 +51,9 @@ public class BeamHandler : MonoBehaviour
         this.endPoint = null;
         this.children = null;
 
-        layerMask = 1 << LayerMask.NameToLayer("Tile");
+        layerMask =
+            1 << LayerMask.NameToLayer("Tile") |
+            1 << LayerMask.NameToLayer("Wall");
 
         SetEndpoints();
     }

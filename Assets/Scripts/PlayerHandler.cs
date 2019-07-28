@@ -16,7 +16,12 @@ public abstract class PlayerHandler : MonoBehaviour
 
     public FPDragHandler carrying = null;
 
+    int dragLayerMask;
+
     void Start() {
+        dragLayerMask =
+            1 << LayerMask.NameToLayer("Glass") |
+            1 << LayerMask.NameToLayer("Wall");
     }
 
     // Update is called once per frame
@@ -105,21 +110,27 @@ public abstract class PlayerHandler : MonoBehaviour
     {
         if (dh.enabled) {
             carrying = dh;
+            carrying.SetTarget(carrying.transform.position);
             carrying.dragging = true;
         }
     }
 
     private void UpdateCarrying()
     {
-        Vector3 targetPos = GetPos() + holdDistance * GetDir();
-        // Cast a ray for the ground.  We're looking to place
-        // the object 0.5 units above the ground.
-        if (floor.Raycast(new Ray(GetPos() - 0.5f * Vector3.up, GetDir()),
+        // Cast a ray to see if we should move the block
+        var ray = new Ray(
+            GetPos() - carrying.transform.position.y * Vector3.up,
+            GetDir());
+        if (Physics.Raycast(
+                ray,
                 out RaycastHit hit,
-                holdDistance)) {
-            targetPos = hit.point + 0.5f * Vector3.up;
+                holdDistance,
+                dragLayerMask)) {
+            if (hit.collider == floor) {
+                carrying.SetTarget(hit.point +
+                        carrying.transform.position.y * Vector3.up);
+            }
         }
-        carrying.SetTarget(targetPos);
     }
 
     public abstract Vector3 GetPos();

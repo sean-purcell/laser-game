@@ -4,13 +4,6 @@ using UnityEngine;
 
 public class TdPlayerHandler : PlayerHandler
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-
-        
-    }
-
     protected override void Teleport(RaycastHit hit) {
     }
 

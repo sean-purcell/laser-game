@@ -4,12 +4,6 @@ using UnityEngine;
 
 public class FpPlayerHandler : PlayerHandler
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
     protected override void Teleport(RaycastHit hit) {
         Vector3 npos = hit.point;
         npos.y = 2;
