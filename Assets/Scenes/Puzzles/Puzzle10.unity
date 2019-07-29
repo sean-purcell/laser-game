@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.5835958, g: 0.56184083, b: 0.5689689, a: 1}
+  m_IndirectSpecularColor: {r: 0.5835963, g: 0.5618413, b: 0.56896937, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -237,7 +237,7 @@ PrefabInstance:
     - target: {fileID: 1218239568840616519, guid: ac7f285a644272b40b9ae402b634492a,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.5
+      value: -2.625
       objectReference: {fileID: 0}
     - target: {fileID: 1218239568840616519, guid: ac7f285a644272b40b9ae402b634492a,
         type: 3}
@@ -292,12 +292,12 @@ PrefabInstance:
     - target: {fileID: 1218239568840616519, guid: ac7f285a644272b40b9ae402b634492a,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 3
+      value: 2.75
       objectReference: {fileID: 0}
     - target: {fileID: 1218239568840616514, guid: ac7f285a644272b40b9ae402b634492a,
         type: 3}
       propertyPath: m_Size.x
-      value: 3.5
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ac7f285a644272b40b9ae402b634492a, type: 3}
@@ -528,6 +528,11 @@ PrefabInstance:
       propertyPath: m_LocalScale.y
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2918350717896982609, guid: d3fbe385ea1166d4cbf1270f7973370a,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.5
+      objectReference: {fileID: 0}
     - target: {fileID: 2918350717896982615, guid: d3fbe385ea1166d4cbf1270f7973370a,
         type: 3}
       propertyPath: target
@@ -596,7 +601,7 @@ PrefabInstance:
     - target: {fileID: 1218239568840616519, guid: ac7f285a644272b40b9ae402b634492a,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.5
+      value: 1.625
       objectReference: {fileID: 0}
     - target: {fileID: 1218239568840616519, guid: ac7f285a644272b40b9ae402b634492a,
         type: 3}
@@ -651,12 +656,12 @@ PrefabInstance:
     - target: {fileID: 1218239568840616519, guid: ac7f285a644272b40b9ae402b634492a,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 3
+      value: 2.75
       objectReference: {fileID: 0}
     - target: {fileID: 1218239568840616514, guid: ac7f285a644272b40b9ae402b634492a,
         type: 3}
       propertyPath: m_Size.x
-      value: 3.5
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ac7f285a644272b40b9ae402b634492a, type: 3}
@@ -1527,6 +1532,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxSpeed: 10
   dragging: 0
+  target: {x: 0, y: 0, z: 0}
+  shrinkOnDrag: 1
+  shrinkFactor: 0.7
 --- !u!1 &2135661636
 GameObject:
   m_ObjectHideFlags: 0
@@ -1687,7 +1695,7 @@ PrefabInstance:
     - target: {fileID: 5483837405778675695, guid: 5926a456ee6833946aec98748b4d8c9c,
         type: 3}
       propertyPath: TeleportOn
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5926a456ee6833946aec98748b4d8c9c, type: 3}

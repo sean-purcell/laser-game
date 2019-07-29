@@ -97,6 +97,7 @@ public class GameHandler : MonoBehaviour
 
     private bool IsPlaying()
     {
+        /*
         // For now only pause when carrying an item
         foreach (var player in GameObject.Find("/PuzzleBase/Player")
                     .GetComponentsInChildren<PlayerHandler>()) {
@@ -104,6 +105,7 @@ public class GameHandler : MonoBehaviour
                 return false;
             }
         }
+        */
         return true;
     }
 

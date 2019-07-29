@@ -92,9 +92,8 @@ public abstract class PlayerHandler : MonoBehaviour
     private void MouseUp()
     {
         // Leave the object wherever it was
-        // TODO: this will leave objects in midair
         if (carrying != null) {
-            carrying.dragging = false;
+            carrying.StopDrag();
             carrying = null;
         }
     }
@@ -111,8 +110,8 @@ public abstract class PlayerHandler : MonoBehaviour
     {
         if (dh.enabled) {
             carrying = dh;
+            carrying.StartDrag();
             carrying.SetTarget(carrying.transform.position);
-            carrying.dragging = true;
         }
     }
 
