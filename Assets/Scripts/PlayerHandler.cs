@@ -161,19 +161,25 @@ public abstract class PlayerHandler : MonoBehaviour
 
     private void UpdateCarrying()
     {
-        // Cast a ray to see if we should move the block
+        // Determine how far away the "ground" is, inefficiently
         var ray = new Ray(
             GetPos() - carrying.transform.position.y * Vector3.up,
             GetDir());
-        if (Physics.Raycast(
+        if (!floor.Raycast(
                 ray,
-                out RaycastHit hit,
-                holdDistance,
+                out RaycastHit floorHit,
+                holdDistance)) {
+            return;
+        }
+        // Cast another ray from our actual positionto see if anything is in
+        // the way
+        if (!Physics.Raycast(
+                GetPos(),
+                GetDir(),
+                floorHit.distance - 1e-5f,
                 dragLayerMask)) {
-            if (hit.collider == floor) {
-                carrying.SetTarget(hit.point +
-                        carrying.transform.position.y * Vector3.up);
-            }
+            carrying.SetTarget(floorHit.point +
+                    carrying.transform.position.y * Vector3.up);
         }
     }
 
