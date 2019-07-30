@@ -22,6 +22,8 @@ public class BeaconHandler : MonoBehaviour, IDragHandler
 
         renderer = GetComponent<Renderer>();
         collider = GetComponent<Collider>();
+
+        UpdateEnabled();
     }
 
     // Update is called once per frame
