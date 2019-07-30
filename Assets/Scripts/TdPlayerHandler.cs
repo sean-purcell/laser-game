@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class TdPlayerHandler : PlayerHandler
 {
-    protected override void Teleport(RaycastHit hit) {
-    }
-
     public override Vector3 GetPos()
     {
         return transform.position;

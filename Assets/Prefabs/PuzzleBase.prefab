@@ -756,7 +756,8 @@ MonoBehaviour:
   camera: {fileID: 5483837405831857209}
   MAX_DIST: 100
   holdDistance: 20
-  TeleportOn: 1
+  teleportMode: 0
+  currentBeacon: {fileID: 0}
   floor: {fileID: 5483837404318919577}
   carrying: {fileID: 0}
 --- !u!1 &5483837405393068675
@@ -1149,7 +1150,8 @@ MonoBehaviour:
   camera: {fileID: 5483837406031649031}
   MAX_DIST: 100
   holdDistance: 10
-  TeleportOn: 1
+  teleportMode: 1
+  currentBeacon: {fileID: 0}
   floor: {fileID: 5483837404318919577}
   carrying: {fileID: 0}
 --- !u!1 &5483837405831857215
@@ -1481,7 +1483,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   raycasterEventMask:
     serializedVersion: 2
-    m_Bits: 3607
+    m_Bits: 28183
   maxRaycastHits: 64
 --- !u!1 &8305283293208418179
 GameObject:

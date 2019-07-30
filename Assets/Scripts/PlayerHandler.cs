@@ -10,18 +10,34 @@ public abstract class PlayerHandler : MonoBehaviour
 
     public float holdDistance = 10;
 
-    public bool TeleportOn = true;
+    public enum TeleportMode {
+        Off = 0,
+        Anywhere = 1,
+        Beacon = 2,
+    };
+    public TeleportMode teleportMode;
+
+    public BeaconHandler currentBeacon;
 
     public Collider floor;
 
     public FPDragHandler carrying = null;
 
+    int clickLayerMask;
     int dragLayerMask;
 
     void Start() {
+        clickLayerMask =
+            1 << LayerMask.NameToLayer("Glass") |
+            1 << LayerMask.NameToLayer("Wall") |
+            1 << LayerMask.NameToLayer("Tile") |
+            1 << LayerMask.NameToLayer("Beacon");
         dragLayerMask =
             1 << LayerMask.NameToLayer("Glass") |
             1 << LayerMask.NameToLayer("Wall");
+        if (currentBeacon != null) {
+            Teleport(currentBeacon);
+        }
     }
 
     // Update is called once per frame
@@ -76,16 +92,25 @@ public abstract class PlayerHandler : MonoBehaviour
     {
         // Find out what got hit
         Debug.Log("Mouse down, pos: " + GetPos() + ", dir: " + GetDir(), this);
-        if (!Physics.Raycast(GetPos(), GetDir(), out RaycastHit hit, MAX_DIST))
+        if (!Physics.Raycast(
+                    GetPos(),
+                    GetDir(),
+                    out RaycastHit hit,
+                    MAX_DIST,
+                    clickLayerMask))
             return;
         Collider collider = hit.collider;
         Debug.Log("Click collided with " + collider, this);
 
         if (collider == floor) {
-            if (TeleportOn)
+            if (teleportMode == TeleportMode.Anywhere)
                 Teleport(hit);
-        } else if (GetDragHandler(collider, out FPDragHandler dh)) {
+        } else if (GetHandler<FPDragHandler>(collider, out FPDragHandler dh)) {
             PickUpObject(dh);
+        } else if (GetHandler<BeaconHandler>(collider, out BeaconHandler bh)) {
+            if (teleportMode == TeleportMode.Beacon) {
+                Teleport(bh);
+            }
         }
     }
 
@@ -98,11 +123,30 @@ public abstract class PlayerHandler : MonoBehaviour
         }
     }
 
-    protected abstract void Teleport(RaycastHit hit);
-
-    private bool GetDragHandler(Collider c, out FPDragHandler dh)
+    private void Teleport(RaycastHit hit)
     {
-        dh = c.GetComponentInParent<FPDragHandler>();
+        Vector3 npos = hit.point;
+        npos.y = transform.position.y;
+        transform.position = npos;
+    }
+
+    private void Teleport(BeaconHandler bh)
+    {
+        if (currentBeacon != bh && currentBeacon != null) {
+            currentBeacon.Leave();
+        }
+
+        Vector3 npos = bh.transform.position;
+        npos.y = transform.position.y;
+        transform.position = npos;
+
+        currentBeacon = bh;
+        currentBeacon.Enter();
+    }
+
+    private bool GetHandler<T>(Collider c, out T dh)
+    {
+        dh = c.GetComponentInParent<T>();
         return dh != null;
     }
 
