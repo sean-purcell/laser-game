@@ -11,11 +11,13 @@ public class VrSwitcher : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        /*
         if (vr) {
             EnableVr();
         } else {
             DisableVr();
         }
+        */
     }
 
     public void EnableVr() {
@@ -25,12 +27,20 @@ public class VrSwitcher : MonoBehaviour
     private static IEnumerator EnableVrCoro() {
         string device = "cardboard";
 
+        Debug.Log("Current device: " + XRSettings.loadedDeviceName);
+
         if (string.Compare(XRSettings.loadedDeviceName, device, true) != 0) {
+            Debug.Log("Loading VR");
             XRSettings.LoadDeviceByName(device);
             yield return null;
         }
 
-        XRSettings.enabled = true;
+        if (string.Compare(XRSettings.loadedDeviceName, device, true) != 0) {
+            Debug.Log("Failed to load VR");
+        } else {
+            XRSettings.enabled = true;
+            Debug.Log("Loaded device: " + XRSettings.loadedDeviceName);
+        }
     }
 
     public void DisableVr() {

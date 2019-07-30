@@ -36,7 +36,8 @@ public class PlayMode : MonoBehaviour
 
     void OnValidate()
     {
-        setUpMode();
+        if (Application.isEditor && !Application.isPlaying)
+            setUpMode();
     }
 
     public void setUpMode()
