@@ -48,6 +48,10 @@ public class PlayMode : MonoBehaviour
     public void setUpMode()
     {
         Mode target = overrideMode ? modeOverride : mode;
+        if (target == Mode.Vr && !VrSwitcher.HasVr()) {
+            target = Mode.FirstPerson;
+        }
+        Debug.Log("Setting up mode " + target);
         foreach (var m in enableLists) {
             setEnabledAll(m.objects, false);
         }

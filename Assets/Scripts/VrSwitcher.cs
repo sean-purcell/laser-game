@@ -11,9 +11,20 @@ public class VrSwitcher : MonoBehaviour
     public bool disableVr = false;
     public bool enableVr = false;
 
+    public static bool HasVr()
+    {
+        foreach (var s in XRSettings.supportedDevices) {
+            if (string.Compare(s, "cardboard", true) == 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
+        Debug.Log("enableVr: " + enableVr);
         if (enableVr) {
             EnableVr();
         } else if (disableVr) {
