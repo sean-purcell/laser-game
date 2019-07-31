@@ -22,6 +22,7 @@ public abstract class PlayerHandler : MonoBehaviour
     public Collider floor;
 
     public FPDragHandler carrying = null;
+    public FpBackButtonHandler backButton = null;
 
     int clickLayerMask;
     int dragLayerMask;
@@ -31,7 +32,7 @@ public abstract class PlayerHandler : MonoBehaviour
             1 << LayerMask.NameToLayer("Glass") |
             1 << LayerMask.NameToLayer("Wall") |
             1 << LayerMask.NameToLayer("Tile") |
-            1 << LayerMask.NameToLayer("Beacon");
+            1 << LayerMask.NameToLayer("Interactive");
         dragLayerMask =
             1 << LayerMask.NameToLayer("Glass") |
             1 << LayerMask.NameToLayer("Wall");
@@ -111,6 +112,10 @@ public abstract class PlayerHandler : MonoBehaviour
             if (teleportMode == TeleportMode.Beacon) {
                 Teleport(bh);
             }
+        } else if (GetHandler<FpBackButtonHandler>(collider,
+                    out FpBackButtonHandler bb)) {
+            bb.Click();
+            backButton = bb;
         }
     }
 
@@ -120,6 +125,9 @@ public abstract class PlayerHandler : MonoBehaviour
         if (carrying != null) {
             carrying.StopDrag();
             carrying = null;
+        }
+        if (backButton != null) {
+            backButton.Unclick();
         }
     }
 
