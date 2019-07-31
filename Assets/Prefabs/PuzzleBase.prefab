@@ -482,6 +482,7 @@ MonoBehaviour:
   - mode: 1
     objects:
     - {fileID: 5483837405175438072}
+    - {fileID: 5483837404715393610}
     extra:
       m_PersistentCalls:
         m_Calls:
@@ -548,7 +549,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5483837404715393610
 RectTransform:
   m_ObjectHideFlags: 0
