@@ -5,11 +5,16 @@ using UnityEngine.Events;
 
 public class PlayMode : MonoBehaviour
 {
+
     public enum Mode {
         FirstPerson = 0,
         Topdown = 1,
         Vr = 2,
     };
+ 
+    // TODO: Do this more cleanly
+    public static bool overrideMode = false;
+    public static Mode modeOverride = Mode.Topdown;
 
     [System.Serializable]
     public class ModeInitList
@@ -42,11 +47,12 @@ public class PlayMode : MonoBehaviour
 
     public void setUpMode()
     {
+        Mode target = overrideMode ? modeOverride : mode;
         foreach (var m in enableLists) {
             setEnabledAll(m.objects, false);
         }
         foreach (var m in enableLists) {
-            if (m.mode == mode) {
+            if (m.mode == target) {
                 setEnabledAll(m.objects, true);
                 m.extra.Invoke();
             }

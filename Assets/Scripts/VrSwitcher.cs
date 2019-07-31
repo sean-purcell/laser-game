@@ -8,16 +8,17 @@ public class VrSwitcher : MonoBehaviour
     [Tooltip("Whether to enable or disable VR")]
     public bool vr = true;
 
+    public bool disableVr = false;
+    public bool enableVr = false;
+
     // Start is called before the first frame update
     void Start()
     {
-        /*
-        if (vr) {
+        if (enableVr) {
             EnableVr();
-        } else {
+        } else if (disableVr) {
             DisableVr();
         }
-        */
     }
 
     public void EnableVr() {
@@ -48,7 +49,9 @@ public class VrSwitcher : MonoBehaviour
     }
 
     private static IEnumerator DisableVrCoro() {
-        XRSettings.LoadDeviceByName("");
-        yield return null;
+        if (string.Compare(XRSettings.loadedDeviceName, "", true) != 0) {
+            XRSettings.LoadDeviceByName("");
+            yield return null;
+        }
     }
 }
