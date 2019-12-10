@@ -27,7 +27,7 @@ public class LevelSelectHandler : MonoBehaviour
         Populate();
     }
 
-    // Creates a button for each level. 
+    // Creates a button for each level.
     private void Populate()
     {
         foreach (string level in levels)
