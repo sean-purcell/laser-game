@@ -20,23 +20,66 @@ public class LevelSelectHandler : MonoBehaviour
     // This is where we'll instantiate the new level select buttons.
     public GameObject contentPanel;
 
+    public Button prevPageButton;
+    public Button nextPageButton;
+
+    // Used for pagination. If the page is negative, we set it as 0 the next
+    // time we populate. If it exceeds the last page, then we set it to the last
+    // page.
+    public int page;
+
+    // Should also be positive.
+    public int levelsPerPage;
+
     // Start is called before the first frame update
     void Start()
     {
-        // TODO(toyang): I think we might have to destroy this later, but not sure.
         Populate();
+
+        this.prevPageButton.onClick.AddListener(this.prevPage);
+        this.nextPageButton.onClick.AddListener(this.nextPage);
+    }
+
+    private void prevPage()
+    {
+        --this.page;
+        this.Populate();
+    }
+
+    private void nextPage()
+    {
+        ++this.page;
+        this.Populate();
     }
 
     // Creates a button for each level.
     private void Populate()
     {
-        foreach (string level in levels)
+        // Keep the page count reasonable.
+        int lastPage = (this.levels.Count - 1)/this.levelsPerPage;
+        if (this.page < 0)
+        {
+            this.page = 0;
+        }
+        else if (this.page > lastPage)
+        {
+            this.page = lastPage;
+        }
+
+        foreach (Transform levelButton in contentPanel.transform)
+        {
+            GameObject.Destroy(levelButton.gameObject);
+        }
+
+        for (int ii = this.page * this.levelsPerPage;
+             ii < (this.page + 1) * this.levelsPerPage && ii < this.levels.Count;
+             ++ii)
         {
             var newButton = (GameObject)Instantiate(levelSelectButtonPrefab);
-            newButton.transform.SetParent(contentPanel.GetComponent<Transform>(), false);
+            newButton.transform.SetParent(contentPanel.transform, false);
 
             var buttonHandler = newButton.GetComponent<LevelSelectButtonHandler>();
-            buttonHandler.Setup(level);
+            buttonHandler.Setup(this.levels[ii]);
         }
     }
 }
