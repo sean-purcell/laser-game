@@ -58,10 +58,10 @@ public class GameHandler : MonoBehaviour
         return simTime;
     }
 
-    public BeamHandler CreateBeam(Vector3 start, Vector3 dir)
+    public BeamHandler CreateBeam(Vector3 start, Vector3 dir, BeamHandler template)
     {
         var beam = Instantiate<BeamHandler>(beamPrefab, beamParent.transform);
-        beam.InitBeam(this, start, dir);
+        beam.InitBeam(this, start, dir, template);
         return beam;
     }
 

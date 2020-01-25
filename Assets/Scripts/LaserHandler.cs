@@ -11,7 +11,8 @@ public class LaserHandler : TileHandler
     {
         beam = game.CreateBeam(
             transform.TransformPoint(new Vector3(0, 0.5f, 0)),
-            transform.TransformDirection(new Vector3(0, 1, 0))
+            transform.TransformDirection(new Vector3(0, 1, 0)),
+            null /* no template beam */ 
         );
     }
 

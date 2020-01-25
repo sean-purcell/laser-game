@@ -21,6 +21,9 @@ public class BeamHandler : MonoBehaviour
     public float start;
     public float end;
 
+    // Decremented on every beam split, to avoid accidentally going infinite.
+    public int intensity;
+
     public bool powered;
 
     public TileHandler endPoint;
@@ -30,7 +33,7 @@ public class BeamHandler : MonoBehaviour
 
     int layerMask;
 
-    public void InitBeam(GameHandler h, Vector3 start, Vector3 dir)
+    public void InitBeam(GameHandler h, Vector3 start, Vector3 dir, BeamHandler template)
     {
         if (beamCount >= MAX_BEAMS) {
             GameObject.Destroy(gameObject);
@@ -45,6 +48,8 @@ public class BeamHandler : MonoBehaviour
 
         this.start = 0;
         this.end = 0;
+
+        this.intensity = (template != null) ? template.intensity : 4;
 
         this.powered = true;
 
@@ -140,7 +145,7 @@ public class BeamHandler : MonoBehaviour
             if (newStart <= end - 0.01) {
                 // New ray!
                 var dir = GetDir();
-                var beam = game.CreateBeam(transform.position + newStart * dir, dir);
+                var beam = game.CreateBeam(transform.position + newStart * dir, dir, this);
 
                 beam.end = end - newStart;
 
