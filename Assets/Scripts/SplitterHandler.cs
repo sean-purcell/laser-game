@@ -35,4 +35,9 @@ public class SplitterHandler : TileHandler
         }
         return beams;
     }
+
+    public override bool TriggersSprayEffect()
+    {
+        return false;
+    }
 }

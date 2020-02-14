@@ -49,4 +49,10 @@ public class TileHandler : MonoBehaviour
                 Quaternion.identity, collisionLayers);
         return overlap.Length == 0;
     }
+
+    // Whether or not this type of tile should result in the beam "spraying" upon collision
+    public virtual bool TriggersSprayEffect()
+    {
+        return true;
+    }
 }

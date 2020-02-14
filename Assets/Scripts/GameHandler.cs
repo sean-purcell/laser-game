@@ -15,6 +15,9 @@ public class GameHandler : MonoBehaviour
     public PuzzleHandler puzzle;
     public GameObject tileParent;
 
+    public SprayEffectHandler sprayEffectPrefab;
+    public GameObject sprayEffectParent;
+
     public Transform camera;
 
     public bool playing;
@@ -31,6 +34,7 @@ public class GameHandler : MonoBehaviour
         InitPuzzle();
         InitTiles();
         InitBeamParent();
+        InitSprayEffectParent();
 
         simTime = 0;
 
@@ -63,6 +67,11 @@ public class GameHandler : MonoBehaviour
         var beam = Instantiate<BeamHandler>(beamPrefab, beamParent.transform);
         beam.InitBeam(this, start, dir, template);
         return beam;
+    }
+
+    public SprayEffectHandler CreateSprayEffect()
+    {
+        return Instantiate<SprayEffectHandler>(sprayEffectPrefab, sprayEffectParent.transform);
     }
 
     // Update is called once per frame
@@ -143,6 +152,16 @@ public class GameHandler : MonoBehaviour
         if (beamParent == null) {
             beamParent = new GameObject();
             beamParent.name = "Beams";
+        }
+    }
+
+    private void InitSprayEffectParent()
+    {
+        sprayEffectParent = GameObject.Find("/SprayEffects");
+        if (sprayEffectParent == null)
+        {
+            sprayEffectParent = new GameObject();
+            sprayEffectParent.name = "SprayEffects";
         }
     }
 

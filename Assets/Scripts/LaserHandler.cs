@@ -22,4 +22,9 @@ public class LaserHandler : TileHandler
         // Update the position of the beam to track the position of the laser
         beam.transform.position = transform.TransformPoint(new Vector3(0, 0.5f, 0));
     }
+
+    public override bool TriggersSprayEffect()
+    {
+        return false;
+    }
 }

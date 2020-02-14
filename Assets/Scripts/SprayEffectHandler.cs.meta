@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: dcb181403a4c44223a477f42425370bd
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - sprayEffect: {fileID: 5599451538804617024, guid: ce5dd78af62534940b5fd103208e625a,
+      type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

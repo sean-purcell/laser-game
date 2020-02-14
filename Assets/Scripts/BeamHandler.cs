@@ -31,6 +31,8 @@ public class BeamHandler : MonoBehaviour
     public Vector3 hitNormal;
     public List<BeamHandler> children;
 
+    public SprayEffectHandler sprayEffect;
+
     int layerMask;
 
     public void InitBeam(GameHandler h, Vector3 start, Vector3 dir, BeamHandler template)
@@ -55,6 +57,8 @@ public class BeamHandler : MonoBehaviour
 
         this.endPoint = null;
         this.children = null;
+
+        this.sprayEffect = game.CreateSprayEffect();
 
         layerMask =
             1 << LayerMask.NameToLayer("Tile") |
@@ -100,6 +104,7 @@ public class BeamHandler : MonoBehaviour
 
         if (start >= end) {
             DepowerChildren();
+            GameObject.Destroy(sprayEffect);
             GameObject.Destroy(gameObject);
             beamCount--;
             return;
@@ -123,14 +128,15 @@ public class BeamHandler : MonoBehaviour
                 ApproxEqual(hit.normal, hitNormal);
         if (children != null && (!hasHit || !hitMatches)) {
             // If we have a real hit that doesn't exist anymore (because the
-            // source moved), stop powering the children.
+            // source moved), stop powering the children & stop any spray effects
             DepowerChildren();
+            sprayEffect.Stop();
             endPoint = null;
             children = null;
         }
 
-        // If we don't have a hit theres nothing to do
         if (!hasHit) {
+            sprayEffect.Stop();
             return;
         }
 
@@ -165,6 +171,11 @@ public class BeamHandler : MonoBehaviour
         children = tile.OnBeamCollision(this, hit);
         if (children == null) {
             children = new List<BeamHandler>();
+        }
+
+        if (tile.TriggersSprayEffect()) {
+            // Render a spray effect to highlight that the beam hit a solid, nonreflective surface
+            sprayEffect.Play(hit.point, Vector3.Reflect(GetDir(), hit.normal));
         }
     }
 

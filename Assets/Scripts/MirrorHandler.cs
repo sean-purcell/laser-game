@@ -23,4 +23,9 @@ public class MirrorHandler : TileHandler
         beams.Add(game.CreateBeam(hit.point, reflectedDir, beam));
         return beams;
     }
+
+    public override bool TriggersSprayEffect()
+    {
+        return false;
+    }
 }
