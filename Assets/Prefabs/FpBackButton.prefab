@@ -107,7 +107,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2db8a9774eb2d174a86c27c3ad000bd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainMenuScene: MainMenu
+  mainMenuScene: MainMenuVr
   clicked: 0
   fill: 0
 --- !u!1 &2897117019424982432
