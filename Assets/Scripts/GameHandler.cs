@@ -18,7 +18,16 @@ public class GameHandler : MonoBehaviour
     public SprayEffectHandler sprayEffectPrefab;
     public GameObject sprayEffectParent;
 
-    public Transform camera;
+    public PlayerHandler player;
+
+    private bool won;
+    private bool teleportedBack;
+
+    private Vector3 oldPosition;
+    
+    private Vector3 oldEulerAngles;
+    
+    private Vector3 oldCameraEulerAngles;
 
     public bool playing;
 
@@ -39,6 +48,9 @@ public class GameHandler : MonoBehaviour
         simTime = 0;
 
         cleanup = null;
+
+        won = false;
+        teleportedBack = false;
     }
 
     public void Play()
@@ -78,11 +90,29 @@ public class GameHandler : MonoBehaviour
     void Update()
     {
         ProcessInput();
-        if (puzzle.IsWin()){
+        if (puzzle.IsWin() && !won && !teleportedBack){
             puzzle.UpdateWinTargets();
 
+            won = true;
+
+
+            oldPosition = player.transform.position;
+            oldEulerAngles = player.transform.eulerAngles;
+            oldCameraEulerAngles = player.camera.transform.eulerAngles;
+
+            player.transform.position = new Vector3(-2000, 0, 0);
+            player.transform.eulerAngles = new Vector3(0,0,0);
+            player.camera.transform.eulerAngles = new Vector3(0,0,0);
             // TODO: "Next puzzle" button should appear on the navigation menu
         }
+    }
+
+    public void teleportBack() {
+        Debug.Assert(won == true);
+        teleportedBack = true;
+        player.transform.position = oldPosition;
+        player.transform.eulerAngles = oldEulerAngles;
+        player.camera.transform.eulerAngles = oldCameraEulerAngles;
     }
 
     private void ProcessInput()
