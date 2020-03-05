@@ -8,7 +8,10 @@ public class LevelSelectButtonHandler : MonoBehaviour
 {
     public Text levelLabel;
 
-    // Maybe this should have some sensible default value?
+    public Image levelStateCompletedIcon;
+
+    // Maybe this should have some sensible default value? These need to be
+    // unique.
     private string level;
 
     // Initializes the button with the appropriate level.
@@ -16,6 +19,22 @@ public class LevelSelectButtonHandler : MonoBehaviour
     {
         this.level = level;
         levelLabel.text = level;
+
+        this.hideAllIcons();
+
+        switch (PersistenceHandler.GetLevelState(level))
+        {
+            case LevelState.New:
+                break;
+            case LevelState.Visited:
+                // TODO
+                break;
+            case LevelState.Completed:
+                levelStateCompletedIcon.enabled = true;
+                break;
+            default:
+                break;
+        }
     }
 
     /**
@@ -25,5 +44,10 @@ public class LevelSelectButtonHandler : MonoBehaviour
     public void LoadLevel()
     {
         SceneManager.LoadScene(level);
+    }
+
+    private void hideAllIcons()
+    {
+        levelStateCompletedIcon.enabled = false;
     }
 }
