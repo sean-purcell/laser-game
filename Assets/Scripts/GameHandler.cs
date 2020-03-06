@@ -95,6 +95,8 @@ public class GameHandler : MonoBehaviour
 
             won = true;
 
+            PersistenceHandler.SetLevelState(SceneManager.GetActiveScene().name,
+                                             LevelState.Completed);
 
             oldPosition = player.transform.position;
             oldEulerAngles = player.transform.eulerAngles;

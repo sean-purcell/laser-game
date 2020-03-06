@@ -7,13 +7,14 @@ public static class PersistenceHandler
 {
     public static LevelState GetLevelState(string levelName)
     {
-        // TODO: gotta actually check the persistent storage
-        return LevelState.New;
+        string state = PlayerPrefs.GetString(levelName);
+        return LevelStateMethods.FromString(state);
     }
 
     public static void SetLevelState(string levelName, LevelState state)
     {
-        // TODO
+        Debug.Log("Setting level " + levelName + " to state " + state.Show());
+        PlayerPrefs.SetString(levelName, state.Show());
         return;
     }
 }
