@@ -26,7 +26,7 @@ static class LevelStateMethods
                 return "Show not implemented for state";
         }
     }
-    
+
     public static LevelState FromString(string s)
     {
         if (s.Equals("New"))

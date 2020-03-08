@@ -20,6 +20,8 @@ public class GameHandler : MonoBehaviour
 
     public PlayerHandler player;
 
+    public string mainMenuScene;
+
     private bool won;
     private bool teleportedBack;
 
@@ -73,7 +75,7 @@ public class GameHandler : MonoBehaviour
     public float SimTime() {
         return simTime;
     }
-
+    
     public BeamHandler CreateBeam(Vector3 start, Vector3 dir, BeamHandler template)
     {
         var beam = Instantiate<BeamHandler>(beamPrefab, beamParent.transform);
@@ -85,7 +87,7 @@ public class GameHandler : MonoBehaviour
     {
         return Instantiate<SprayEffectHandler>(sprayEffectPrefab, sprayEffectParent.transform);
     }
-
+    
     // Update is called once per frame
     void Update()
     {
@@ -109,12 +111,18 @@ public class GameHandler : MonoBehaviour
         }
     }
 
-    public void teleportBack() {
+    public void TeleportBack()
+    {
         Debug.Assert(won == true);
         teleportedBack = true;
         player.transform.position = oldPosition;
         player.transform.eulerAngles = oldEulerAngles;
         player.camera.transform.eulerAngles = oldCameraEulerAngles;
+    }
+
+    public void ToMainMenu()
+    {
+        SceneManager.LoadScene(mainMenuScene);
     }
 
     private void ProcessInput()
@@ -123,7 +131,7 @@ public class GameHandler : MonoBehaviour
             playing = !playing;
         }
         if (Input.GetKeyDown("q")) {
-            SceneManager.LoadScene("MainMenu");
+            SceneManager.LoadScene(mainMenuScene);
         }
     }
 
