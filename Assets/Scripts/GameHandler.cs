@@ -26,9 +26,9 @@ public class GameHandler : MonoBehaviour
     private bool teleportedBack;
 
     private Vector3 oldPosition;
-    
+
     private Vector3 oldEulerAngles;
-    
+
     private Vector3 oldCameraEulerAngles;
 
     public bool playing;
