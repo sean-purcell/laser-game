@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class BeaconHandler : MonoBehaviour, IDragHandler
+public class BeaconHandler : MonoBehaviour, IDragHandler, IPointerEnterHandler, IPointerExitHandler
 {
     public bool playerHere;
+
+    public Animator animator;
 
     private bool beaconMode;
 
@@ -52,6 +54,16 @@ public class BeaconHandler : MonoBehaviour, IDragHandler
 
     public void OnDrag(PointerEventData data)
     {
-        // Only implementing this interface to get marked as interactive by GVR
+        // Only implementing this interface to get marked as interactive by GVR. This changes the look of the pointer.
+    }
+
+    public void OnPointerEnter(PointerEventData data)
+    {
+        animator.SetBool("PlayHover", true);
+    }
+
+    public void OnPointerExit(PointerEventData data)
+    {
+        animator.SetBool("PlayHover", false);
     }
 }
