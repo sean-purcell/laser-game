@@ -7,7 +7,7 @@ public class BeaconHandler : MonoBehaviour, IDragHandler, IPointerEnterHandler, 
 {
     public bool playerHere;
 
-    public Animator animator;
+    public CrosshairHandler crosshairHandler;
 
     private bool beaconMode;
 
@@ -59,11 +59,11 @@ public class BeaconHandler : MonoBehaviour, IDragHandler, IPointerEnterHandler, 
 
     public void OnPointerEnter(PointerEventData data)
     {
-        animator.SetBool("PlayHover", true);
+        crosshairHandler.ShowPlayerMovement();
     }
 
     public void OnPointerExit(PointerEventData data)
     {
-        animator.SetBool("PlayHover", false);
+        crosshairHandler.HidePlayerMovement();
     }
 }
