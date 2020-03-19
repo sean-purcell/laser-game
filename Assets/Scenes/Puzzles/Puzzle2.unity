@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.5835958, g: 0.56184083, b: 0.5689689, a: 1}
+  m_IndirectSpecularColor: {r: 0.5835963, g: 0.5618413, b: 0.56896937, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -851,6 +851,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Beacon (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 7452871799132332826, guid: cb43c7373a1fd0f44828959da565a6e8,
+        type: 3}
+      propertyPath: crosshairHandler
+      value: 
+      objectReference: {fileID: 5483837404646983157}
     - target: {fileID: 7452871799132332827, guid: cb43c7373a1fd0f44828959da565a6e8,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1214,6 +1219,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Beacon
       objectReference: {fileID: 0}
+    - target: {fileID: 7452871799132332826, guid: cb43c7373a1fd0f44828959da565a6e8,
+        type: 3}
+      propertyPath: crosshairHandler
+      value: 
+      objectReference: {fileID: 5483837404646983157}
     - target: {fileID: 7452871799132332827, guid: cb43c7373a1fd0f44828959da565a6e8,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1307,6 +1317,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Beacon (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 7452871799132332826, guid: cb43c7373a1fd0f44828959da565a6e8,
+        type: 3}
+      propertyPath: crosshairHandler
+      value: 
+      objectReference: {fileID: 5483837404646983157}
     - target: {fileID: 7452871799132332827, guid: cb43c7373a1fd0f44828959da565a6e8,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1703,6 +1718,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: PuzzleBase
       objectReference: {fileID: 0}
+    - target: {fileID: 4888343217248480897, guid: 5926a456ee6833946aec98748b4d8c9c,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4888343217248480897, guid: 5926a456ee6833946aec98748b4d8c9c,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4888343217248480897, guid: 5926a456ee6833946aec98748b4d8c9c,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5483837406016751851, guid: 5926a456ee6833946aec98748b4d8c9c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1811,7 +1841,7 @@ PrefabInstance:
     - target: {fileID: 5483837406031649025, guid: 5926a456ee6833946aec98748b4d8c9c,
         type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7541621528144664497, guid: 5926a456ee6833946aec98748b4d8c9c,
         type: 3}
@@ -1843,20 +1873,17 @@ PrefabInstance:
       propertyPath: m_LocalRotation.w
       value: 0.7071069
       objectReference: {fileID: 0}
-    - target: {fileID: 4888343217248480897, guid: 5926a456ee6833946aec98748b4d8c9c,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4888343217248480897, guid: 5926a456ee6833946aec98748b4d8c9c,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4888343217248480897, guid: 5926a456ee6833946aec98748b4d8c9c,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5926a456ee6833946aec98748b4d8c9c, type: 3}
+--- !u!114 &5483837404646983157 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4159881109042829418, guid: 5926a456ee6833946aec98748b4d8c9c,
+    type: 3}
+  m_PrefabInstance: {fileID: 5483837404646983156}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43c9622665095f848a82518250afcca7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
