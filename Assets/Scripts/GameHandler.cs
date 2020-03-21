@@ -125,6 +125,13 @@ public class GameHandler : MonoBehaviour
         SceneManager.LoadScene(mainMenuScene);
     }
 
+    public void ToNextLevel()
+    {
+        var scene = SceneManager.GetActiveScene().name;
+        var idx = int.Parse(scene.Substring(6));
+        SceneManager.LoadScene("Puzzle" + (idx + 1));
+    }
+
     private void ProcessInput()
     {
         if (Input.GetKeyDown("space")) {
