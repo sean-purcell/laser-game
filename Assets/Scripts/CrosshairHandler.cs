@@ -19,6 +19,7 @@ public class CrosshairHandler : MonoBehaviour
     void Update()
     {
         
+    }
 
     public void ShowPlayerMovement()
     {
