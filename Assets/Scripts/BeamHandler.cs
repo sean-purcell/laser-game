@@ -5,7 +5,7 @@ using UnityEngine.Assertions;
 
 public class BeamHandler : MonoBehaviour
 {
-    public const int MAX_BEAMS = 100;
+    public const int MAX_BEAMS = 1000;
     public static int beamCount = 0;
 
     // FIXME: we should track start and endpoints, do this with delta-t
@@ -41,6 +41,8 @@ public class BeamHandler : MonoBehaviour
             GameObject.Destroy(gameObject);
             return;
         }
+        this.intensity = (template != null) ? template.intensity : 10;
+
         beamCount++;
 
         this.game = h;
@@ -51,7 +53,6 @@ public class BeamHandler : MonoBehaviour
         this.start = 0;
         this.end = 0;
 
-        this.intensity = (template != null) ? template.intensity : 4;
 
         this.powered = true;
 
