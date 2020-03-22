@@ -1,8 +1,10 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+using UnityEngine.Analytics;
 
 public class FpBackButtonHandler : MonoBehaviour, IDragHandler
 {
@@ -27,6 +29,10 @@ public class FpBackButtonHandler : MonoBehaviour, IDragHandler
         if (clicked) {
             fill += Time.deltaTime;
             if (fill > 1) {
+                var scene = SceneManager.GetActiveScene();
+                Analytics.CustomEvent("levelQuit", new Dictionary<String, object>{
+                    { "level", scene.name },
+                });
                 SceneManager.LoadScene(mainMenuScene);
             }
         }

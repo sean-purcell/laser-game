@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Analytics;
 
 public class GameHandler : MonoBehaviour
 {
@@ -41,6 +42,9 @@ public class GameHandler : MonoBehaviour
     void Start()
     {
         Debug.Log("GameHandler.Start");
+
+        var scene = SceneManager.GetActiveScene();
+        AnalyticsEvent.LevelStart(scene.name, scene.buildIndex);
 
         InitPuzzle();
         InitTiles();
@@ -94,6 +98,13 @@ public class GameHandler : MonoBehaviour
         ProcessInput();
         if (puzzle.IsWin() && !won && !teleportedBack){
             puzzle.UpdateWinTargets();
+
+            var scene = SceneManager.GetActiveScene();
+            Analytics.CustomEvent("levelWin", new Dictionary<String, object>{
+                { "level", scene.name },
+                { "time", simTime },
+            });
+
 
             won = true;
 
