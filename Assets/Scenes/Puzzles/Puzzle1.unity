@@ -1726,6 +1726,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1331526166}
   m_PrefabAsset: {fileID: 0}
+--- !u!223 &1729843291 stripped
+Canvas:
+  m_CorrespondingSourceObject: {fileID: 3988182071174927066, guid: 5926a456ee6833946aec98748b4d8c9c,
+    type: 3}
+  m_PrefabInstance: {fileID: 5483837404646983156}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1764076040 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 958422431464277221, guid: 2657a0d57b23f7244a153c8ef94cae08,
@@ -2087,6 +2093,11 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5483837404602936161, guid: 5926a456ee6833946aec98748b4d8c9c,
+        type: 3}
+      propertyPath: winScreenCanvas
+      value: 
+      objectReference: {fileID: 1729843291}
     - target: {fileID: 5483837405175438072, guid: 5926a456ee6833946aec98748b4d8c9c,
         type: 3}
       propertyPath: m_LocalPosition.y
