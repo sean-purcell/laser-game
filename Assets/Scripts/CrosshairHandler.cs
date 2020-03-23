@@ -24,13 +24,11 @@ public class CrosshairHandler : MonoBehaviour
     public void ShowPlayerMovement()
     {
         playerMovementImage.enabled = true;
-        HideReticle();
     }
 
     public void HidePlayerMovement()
     {
         playerMovementImage.enabled = false;
-        ShowReticle();
     }
 
     public void ShowReticle()
