@@ -124,9 +124,12 @@ public class GameHandler : MonoBehaviour
                 new Vector3(winScreenCanvas.transform.position.x, 0, 0);
 
             // NOTE: the distance we set is based on the z coordinate of the win screen canvas.
-            winScreenCanvas.transform.position =
+            var tpos = 
                 Camera.main.transform.position +
                 Camera.main.transform.forward * winScreenCanvas.transform.position.z;
+            tpos.y = 0;
+            Debug.Log(tpos);
+            winScreenCanvas.transform.position = tpos;
             // We can't just do Camera.main.transform.position here because we
             // end up looking at the back of the win screen.
             winScreenCanvas.transform.LookAt(2 * winScreenCanvas.transform.position -
