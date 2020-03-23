@@ -636,7 +636,7 @@ MonoBehaviour:
   sprayEffectParent: {fileID: 0}
   player: {fileID: 5483837405778675695}
   mainMenuScene: MainMenuVr
-  winScreenCanvas: {fileID: 0}
+  winScreenCanvas: {fileID: 3988182071174927066}
   playing: 1
   simTime: 0
 --- !u!114 &5483837404646983159
