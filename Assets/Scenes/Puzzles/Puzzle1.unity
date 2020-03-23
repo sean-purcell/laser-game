@@ -1524,11 +1524,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 90
       objectReference: {fileID: 0}
-    - target: {fileID: 958422431558574931, guid: 2657a0d57b23f7244a153c8ef94cae08,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 9b560eb4cbc9d784aa02aaa37ec02d9d, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2657a0d57b23f7244a153c8ef94cae08, type: 3}
 --- !u!1001 &1314931429
@@ -2077,11 +2072,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 4159881109042829418, guid: 5926a456ee6833946aec98748b4d8c9c,
-        type: 3}
-      propertyPath: gvrReticleRenderer
-      value: 
-      objectReference: {fileID: 5483837404646983157}
     - target: {fileID: 4888343217248480897, guid: 5926a456ee6833946aec98748b4d8c9c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2244,9 +2234,3 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5926a456ee6833946aec98748b4d8c9c, type: 3}
---- !u!23 &5483837404646983157 stripped
-MeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 5483837404668633389, guid: 5926a456ee6833946aec98748b4d8c9c,
-    type: 3}
-  m_PrefabInstance: {fileID: 5483837404646983156}
-  m_PrefabAsset: {fileID: 0}
