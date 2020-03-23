@@ -23,6 +23,8 @@ public class GameHandler : MonoBehaviour
 
     public string mainMenuScene;
 
+    public Canvas winScreenCanvas;
+
     private bool won;
     private bool teleportedBack;
 
@@ -115,10 +117,20 @@ public class GameHandler : MonoBehaviour
             oldEulerAngles = player.transform.eulerAngles;
             oldCameraEulerAngles = player.camera.transform.eulerAngles;
 
-            player.transform.position = new Vector3(-2000, 0, 0);
-            player.transform.eulerAngles = new Vector3(0,0,0);
-            player.camera.transform.eulerAngles = new Vector3(0,0,0);
-            // TODO: "Next puzzle" button should appear on the navigation menu
+            // teleport to win screen and make it face us
+            // NOTE: google VR stops us from rotating the user's camera, so we
+            // rotate and shift the canvas to face the user.
+            player.transform.position =
+                new Vector3(winScreenCanvas.transform.position.x, 0, 0);
+
+            // NOTE: the distance we set is based on the z coordinate of the win screen canvas.
+            winScreenCanvas.transform.position =
+                Camera.main.transform.position +
+                Camera.main.transform.forward * winScreenCanvas.transform.position.z;
+            // We can't just do Camera.main.transform.position here because we
+            // end up looking at the back of the win screen.
+            winScreenCanvas.transform.LookAt(2 * winScreenCanvas.transform.position -
+                                             Camera.main.transform.position);
         }
     }
 
