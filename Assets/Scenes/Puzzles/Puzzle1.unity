@@ -230,11 +230,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1218239568840616517, guid: ac7f285a644272b40b9ae402b634492a,
         type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: e38a4a7ac387cf94cab594f03fc3ca2f, type: 2}
-    - target: {fileID: 1218239568840616517, guid: ac7f285a644272b40b9ae402b634492a,
-        type: 3}
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
@@ -362,6 +357,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: WallBlock (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2103268032505052581, guid: 9dbb3d5c5c47b9c4dbe2b4ebf6cd0534,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967294
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9dbb3d5c5c47b9c4dbe2b4ebf6cd0534, type: 3}
@@ -1754,11 +1754,6 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 4294967295
       objectReference: {fileID: 0}
-    - target: {fileID: 1218239568840616517, guid: ac7f285a644272b40b9ae402b634492a,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: e38a4a7ac387cf94cab594f03fc3ca2f, type: 2}
     - target: {fileID: 1218239568840616519, guid: ac7f285a644272b40b9ae402b634492a,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2062,6 +2057,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: WallBlock
       objectReference: {fileID: 0}
+    - target: {fileID: 2103268032505052581, guid: 9dbb3d5c5c47b9c4dbe2b4ebf6cd0534,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967294
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9dbb3d5c5c47b9c4dbe2b4ebf6cd0534, type: 3}
 --- !u!4 &1218239567392526175 stripped
@@ -2240,7 +2240,7 @@ PrefabInstance:
     - target: {fileID: 5483837406031649025, guid: 5926a456ee6833946aec98748b4d8c9c,
         type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5926a456ee6833946aec98748b4d8c9c, type: 3}
